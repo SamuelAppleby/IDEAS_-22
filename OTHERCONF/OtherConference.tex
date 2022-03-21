@@ -12,6 +12,7 @@
 \setlength{\textwidth}{6.2in}
 \usepackage{xcolor}
 
+\usepackage[english]{babel}
 
 %%%% COMMENTS
 %% Comments package -- Giacomo
@@ -20,6 +21,8 @@
 %{\pdfcomment{\BODY}}
 \usepackage{easyReview}
 \makeatother
+
+\usepackage{newclude}
 
 
 %% Swiggly notes -- Giacomo
@@ -31,15 +34,49 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{decorations.pathmorphing}
 
+%%% Pseudocodes
+\usepackage{inconsolata}
+\usepackage[noend]{algpseudocode}
+%% Multiline
+\newcommand\CONDITION[2]%
+{\begin{tabular}[t]{@{}l@{}l@{}}
+		#1&#2
+	\end{tabular}%
+}
+\algdef{SE}[WHILE]{While}{EndWhile}[1]%
+{\algorithmicwhile\ \CONDITION{#1}{\ \algorithmicdo}}%
+{\algorithmicend\ \algorithmicwhile}
+\algdef{SE}[FOR]{For}{EndFor}[1]%
+{\algorithmicfor\ \CONDITION{#1}{\ \algorithmicdo}}%
+{\algorithmicend\ \algorithmicfor}
+\algdef{S}[FOR]{ForAll}[1]%
+{\algorithmicforall\ \CONDITION{#1}{\ \algorithmicdo}}
+\algdef{SE}[REPEAT]{Repeat}{Until}{\algorithmicrepeat}[1]%
+{\algorithmicuntil\ \CONDITION{#1}{}}
+\algdef{SE}[IF]{If}{EndIf}[1]%
+{\algorithmicif\ \CONDITION{#1}{\ \algorithmicthen}}%
+{\algorithmicend\ \algorithmicif}%
+\algdef{C}[IF]{IF}{ElsIf}[1]%
+{\algorithmicelse\ \algorithmicif\ \CONDITION{#1}{\ \algorithmicthen}}
+%% End Multiline
+\usepackage{algorithm,algorithmicx}
+\makeatletter
+\algrenewcommand\ALG@beginalgorithmic{\ttfamily}
+\makeatother
+\usepackage{adjustbox} %% Fitting to page
+
+%% mathematics
+\usepackage{braket} %% Set, tuple...
+
+
 \newlength\LineWidth
 \newlength\Amplitude
 \newlength\SegLength
-
 \setlength\LineWidth{0.4pt}
 \setlength\Amplitude{1pt}
 \setlength\SegLength{5pt}
-
 \definecolor{HLcolor}{RGB}{240,0,0}
+
 
 
 \begin{document}
@@ -47,7 +84,7 @@
 %\setlength{\leftmargin}{2.5cm}
 %\setleftmargin{2.5cm}	
 %\setrightmargin{2.5cm}	
-\title{Running Temporal Logical Queries on Knowledge Bases: a Business Process Management Perspective}
+\title{Running Temporal Logical Queries on Knowledge Bases}
 
 \author{[Authors Removed For Double Blind Review]}
 
@@ -58,76 +95,28 @@ State of the art approaches on model checking for declarative temporal models ex
 \end{abstract}
 ~\\
 
-{\bf Keywords}: TODO
+{\bf Keywords}: Artificial Intelligence, Knowledge Bases, Query Plan, Finite Temporal Logic
 ~\\
 
 % A category with the (minimum) three required fields
-{\bf Topics} TODO
+{\bf Topics} Physical Layout, Algorithms
 ~\\
 
 
-\section{Introduction}
-
-\paragraph*{Brief introduction of your general area of interest: provide the \textbf{context} to the overall general setting.}
-\textit{Conformance checking} is a well-known \textsc{Process Mining} technique determining if a sequence of distinguishable events (i.e., a \textit{trace}) conforms to the expected process behavior represented as a \textit{process model} \cite{RozinatA08}. Such a model might be either represented as a set of temporal clauses, determining correlations between events happening at a previous time of the trace (\textit{activation}) and others happening in the immediate future (\textit{target}). Such temporal rules are not limited to the mere presence of specific events within the trace, but also determine specific patterns how such clauses might occur (\S\ref{sec:DAD}). When a trace does not adhere to the model, we say that the trace is \textit{deviant} \cite{bpm21}.
-\medskip
-
-\paragraph*{What do I want to say (to the research community), precisely.} \textit{I want to communicate the general problem that I am aiming to solve}
-\medskip
-
-\paragraph*{Why do I want to talk about this problem? Why is it relevant?} \textit{Because current literature is laking of a given aspect}
-\medskip
-
-\paragraph*{Who might be interested in our solution? How these people might use this work?} \textit{Please provide the pieces of information that are specific to your own research field, and provide some use case examples motivating the practicality of your approach} Therefore, the system is adaptable for real-time applications: a video game run, where repairs can be analysed to provide \emph{suggestions} to the player; events leading up to a cyber-security attack, where repairs can provide advice on how to prevent the attack progressing etc. \texttt{\color{red}[TODO]}
-\medskip
-
-
-\paragraph*{Now, communicate our idea also to the people working in our same area!} \textit{In particular, this means that we can go down in technicalities on what we want to solve, which are the primarily goals of our research, and which are the intermediate requirements/results leading to the results that we expect.} 
- In this paper, we propose the addition of a knowledge base (KB) to providing an optimized representation of the trace logs over which the declarative models $\mathcal{M}$ are going to be queried.\texttt{\color{red}[TODO]} % By storing it in a KB,  data is obtained and processed only once, rather than per query, as existing state of the art. 
- 
- 
-
-
-
-\section{Related Work}
-\textit{In this space, you usually want to quote the papers that you know that are near to the area. You want to make comparison, make similarities, and state which are their deficiencies if any} Questions that a reviewer might ask:
-\begin{itemize}
-	\item Is the current literature being assessed exhaustive, or is there something missing?
-	\item If the current literature us exhaustive, is it clear why each component is introduced?
-	\item For each piece of literature, are the different approaches compared and analysed, in weak and strong links? Which are the connections to your proposed approach?
-	\item E.g., are the opponents introduced as baselines for the experiment section also introduced in here?
-\end{itemize}
-
-%% Second paragraph: comparison with Burattin. 
-\paragraph*{Burattin et al.} \cite{BurattinMS16}
-\begin{itemize}
-\item{Briefly introduce what Burattin does}
-\item{How this problem is related to ours?}
-\item{How many clauses does Burattin consider at a time?}
-\item{Still, can those be also different types of clauses or not?}
-\item{On the other hand, do they have proper support for data conditions and event labels?}
-\item{Do they use a Knowledge Base? If not, how are they querying?}
-\item{What is their proposed parallelization approach? What is the difference and similarity with our approach?}
-\end{itemize}
-\texttt{\color{red}[TODO:]}  For $\mathcal{C}$ Declare clauses, where $\mathcal{N}$ is the data loading cost, implementations without a KB suffer, resulting in $\mathcal{O(C \cdot N)}$ complexity. With a KB, data loading is necessary only once, enhancing the complexity to $\mathcal{O(C + N)}$.
-
-\paragraph*{SQLMiner} \cite{SchonigRCJM16,Schonig15}
-\begin{itemize}
-\item{Briefly introduce what SQLMiner does}
-\item{How this problem is related to ours}
-\item{How many clauses does SQLMiner consider at a time?}
-\item{Still, can those be also different types of clauses or not?}
-\item{On the other hand, can we potentially do it? does our solution, on the other hand, provide a constraint on the type of the model, or is this general enough to consider each possible clause at the same time?}
-\end{itemize}
+\include*{sections/10introduction}
+\include*{sections/20related}
+\include*{sections/30declare_definition}
+\include*{sections/40physical_model}
+\include*{sections/45operator_semantics}
+\include*{sections/50experiments}
+\include*{sections/60conclusions}
 
 
 
 
-\section{Declare Data Aware: a lightweight introduction}\label{sec:DAD}
-\texttt{\color{red}[TODO]}
+\bibliographystyle{abbrv}  
+\bibliography{refs.bib}  
 
-\bibliographystyle{plain} 
-\bibliography{refs} 
 
 \end{document}
 

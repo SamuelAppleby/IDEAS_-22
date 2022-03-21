@@ -1,0 +1,30 @@
+\section{Related Work}
+\textit{In this space, you usually want to quote the papers that you know that are near to the area. You want to make comparison, make similarities, and state which are their deficiencies if any} Questions that a reviewer might ask:
+\begin{itemize}
+	\item Is the current literature being assessed exhaustive, or is there something missing?
+	\item If the current literature us exhaustive, is it clear why each component is introduced?
+	\item For each piece of literature, are the different approaches compared and analysed, in weak and strong links? Which are the connections to your proposed approach?
+	\item E.g., are the opponents introduced as baselines for the experiment section also introduced in here?
+\end{itemize}
+
+%% Second paragraph: comparison with Burattin. 
+\paragraph*{Burattin et al.} \cite{BurattinMS16}
+\begin{itemize}
+	\item{Briefly introduce what Burattin does}
+	\item{How this problem is related to ours?}
+	\item{How many clauses does Burattin consider at a time?}
+	\item{Still, can those be also different types of clauses or not?}
+	\item{On the other hand, do they have proper support for data conditions and event labels?}
+	\item{Do they use a Knowledge Base? If not, how are they querying?}
+	\item{What is their proposed parallelization approach? What is the difference and similarity with our approach?}
+\end{itemize}
+\texttt{\color{red}[TODO:]}  For $\mathcal{C}$ Declare clauses, where $\mathcal{N}$ is the data loading cost, implementations without a KB suffer, resulting in $\mathcal{O(C \cdot N)}$ complexity. With a KB, data loading is necessary only once, enhancing the complexity to $\mathcal{O(C + N)}$.
+
+\paragraph*{SQLMiner} \cite{SchonigRCJM16,Schonig15}
+\begin{itemize}
+	\item{Briefly introduce what SQLMiner does}
+	\item{How this problem is related to ours}
+	\item{How many clauses does SQLMiner consider at a time?}
+	\item{Still, can those be also different types of clauses or not?}
+	\item{On the other hand, can we potentially do it? does our solution, on the other hand, provide a constraint on the type of the model, or is this general enough to consider each possible clause at the same time?}
+\end{itemize}
