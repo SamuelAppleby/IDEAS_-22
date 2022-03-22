@@ -14,7 +14,7 @@
 \Function{Future}{$\varphi$}
 		\State {\textbf{Require:\;}sorted($\varphi$)}
 		\ForAll{$\braket{t,e,L}\in\varphi$}
-		 \textbf{yield} $\braket{t,e-1,\bigcup\Set{L'|\braket{t,e',L'}\in\varphi\texttt{\textbf{\;and\;}}e'\geq e}}$
+		 \textbf{yield} $\braket{t,e,\bigcup\Set{L'|\braket{t,e',L'}\in\varphi\texttt{\textbf{\;and\;}}e'\geq e}}$
 		\EndFor
 \EndFunction\medskip
 %%
@@ -23,7 +23,7 @@
 		\ForAll{$\braket{t,e,L}\in\varphi$}
 		\State $E\gets\Set{e'|\braket{t,e',L'}\in\varphi\texttt{\textbf{\;and\;}}e'\geq e}$
 		\If {$|E|=\ell_t-e$} 
-		 \textbf{yield} $\braket{t,e-1,\bigcup\Set{L'|\braket{t,e',L'}\in\varphi\texttt{\textbf{\;and\;}}e'\in E}}$
+		 \textbf{yield} $\braket{t,e,\bigcup\Set{L'|\braket{t,e',L'}\in\varphi\texttt{\textbf{\;and\;}}e'\in E}}$
 		 \EndIf
 		\EndFor
 \EndFunction\medskip
