@@ -1,0 +1,24 @@
+\subsection{Data-Aware Conformance Checking}
+
+%% Second paragraph: comparison with Burattin. 
+\paragraph*{Burattin et al.} \cite{BurattinMS16}
+\begin{itemize}
+	\item{Briefly introduce what Burattin does}
+	\item{How this problem is related to ours?}
+	\item{How many clauses does Burattin consider at a time?}
+	\item{Still, can those be also different types of clauses or not?}
+	\item{On the other hand, do they have proper support for data conditions and event labels?}
+	\item{Do they use a Knowledge Base? If not, how are they querying?}
+	\item{What is their proposed parallelization approach? What is the difference and similarity with our approach?}
+\end{itemize}
+Burratin et al. attempts to tackle... For $\mathcal{C}$ Declare clauses, where $\mathcal{N}$ is the data loading cost, implementations without a KB suffer, resulting in $\mathcal{O(C \cdot N)}$ complexity. With a KB, data loading is necessary only once, enhancing the complexity to $\mathcal{O(C + N)}$.
+
+\paragraph*{SQLMiner} \cite{Schonig15, SchonigRCJM16}
+\begin{itemize}
+	\item{Briefly introduce what SQLMiner does}
+	\item{How this problem is related to ours}
+	\item{How many clauses does SQLMiner consider at a time?}
+	\item{Still, can those be also different types of clauses or not?}
+	\item{On the other hand, can we potentially do it? does our solution, on the other hand, provide a constraint on the type of the model, or is this general enough to consider each possible clause at the same time?}
+\end{itemize}
+\replace{One strategy has}{SQLMiner \cite{Schonig15}} uses SQL in a declarative approach to process mining. SQLMiner  exploits traditional SQL queries to retrieve patterns found from a table. This proposes that `existing declarative process mining approaches suffer from performance issues with real life event logs...' and the proposed solution is `fast without limiting itself to detecting certain control-flow constraints'. Clause specific queries e.g. \emph{Response} are provided, that are then processed on the table. Each combination of clause is tested and its conformance against the table is outputted. They also make use of \emph{Support} and \emph{Confidence} values, that are used to determine the precision and reliability of the calculation. If these values are above their respective thresholds, they are included in the result. As queries must run sequentially, only one clause is considered at a time. This is inferior to KnoBAB, which has the ability to process queries one at a time, or multiple simultaneously through the batch computation of the query plan. To generate the conformance for a range of clauses, each respective query must be run, whereas KnoBAB can accept all valid clauses \remove{concurrently}. SQL miner, due to the query structure, requires vast amounts of secondary memory for temporary caching of query computation, \highlight{much less than KnoBAB requires}.
