@@ -13,6 +13,10 @@
 \end{itemize}
 Burratin et al. attempts to tackle... For $\mathcal{C}$ Declare clauses, where $\mathcal{N}$ is the data loading cost, implementations without a KB suffer, resulting in $\mathcal{O(C \cdot N)}$ complexity. With a KB, data loading is necessary only once, enhancing the complexity to $\mathcal{O(C + N)}$.
 
+
+Conformance checking with a declarative language has been previously researched. One approach uses \LTLf \cite{BurattinMS16}. However, this does not exploit the benefits of using a relational database, where techniques such as query optimisation can benefit computation. In addition, it is inflexible; each clause is implemented from scratch, and, as they do not share the operators we provide, the addition of further clauses would require an entirely new implementation. We propose a more generalised solution, where each clause is composed of a combination of unique operators, allowing for any new clause to be included on the fly. 
+
+
 \paragraph*{SQLMiner} \cite{Schonig15, SchonigRCJM16}
 \begin{itemize}
 	\item{Briefly introduce what SQLMiner does}
