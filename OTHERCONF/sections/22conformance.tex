@@ -1,7 +1,7 @@
 \subsection{Data-Aware Conformance Checking}
 
 %% Second paragraph: comparison with Burattin. 
-\paragraph*{Burattin et al.} \cite{BurattinMS16}
+\paragraph*{Burattin et al.}
 \begin{itemize}
 	\item{Briefly introduce what Burattin does}
 	\item{How this problem is related to ours?}
@@ -11,13 +11,13 @@
 	\item{Do they use a Knowledge Base? If not, how are they querying?}
 	\item{What is their proposed parallelization approach? What is the difference and similarity with our approach?}
 \end{itemize}
-Burratin et al. attempts to tackle... For $\mathcal{C}$ Declare clauses, where $\mathcal{N}$ is the data loading cost, implementations without a KB suffer, resulting in $\mathcal{O(C \cdot N)}$ complexity. With a KB, data loading is necessary only once, enhancing the complexity to $\mathcal{O(C + N)}$.
+Previous solutions, while performing conformance checking, do not consider the addition of payload information for each event, limiting the expressiveness of the model. Burratin et al. \cite{BurattinMS16} propose a solution that provides conformance checking to data-aware logs. Declare templates are decomposed into LTLf expressions, that not only contain event information, but a payload associated to each event per clause. This information manifests itself as \emph{activation} and \emph{correlation} conditions for to the \emph{activation} and \emph{target} events respectively. This approach is claimed to be is more optimised than \cite{VanDerAalst2005}, and, for larger logs, than \cite{Burattin2012}, which do not even consider data conditions. 
+
+While this solution provides good performance, it does not exploit the benefits that a relational database can provide, where techniques such as query optimisation can benefit computation. Due to this, they cannot capitalise on possible performance gains by running multiple queries concurrently, which a database allows. Another further gain that can be made from structuring queries in a query plan (that this approach does not support) is that it can be easily parallelised. The authors provides no such solution. In addition, it is inflexible; each clause is implemented from scratch, and, as they do not share the operators we provide, the addition of further clauses would require an entirely new implementation. We propose a more generalised solution, where each clause is composed of a combination of unique operators, allowing for any new clause to be included on the fly. 
 
 
-Conformance checking with a declarative language has been previously researched. One approach uses \LTLf \cite{BurattinMS16}. However, this does not exploit the benefits of using a relational database, where techniques such as query optimisation can benefit computation. In addition, it is inflexible; each clause is implemented from scratch, and, as they do not share the operators we provide, the addition of further clauses would require an entirely new implementation. We propose a more generalised solution, where each clause is composed of a combination of unique operators, allowing for any new clause to be included on the fly. 
-
-
-\paragraph*{SQLMiner} \cite{Schonig15, SchonigRCJM16}
+\subsection{Process Mining through Conformance Checking}
+\paragraph*{SQLMiner}
 \begin{itemize}
 	\item{Briefly introduce what SQLMiner does}
 	\item{How this problem is related to ours}
@@ -25,4 +25,8 @@ Conformance checking with a declarative language has been previously researched.
 	\item{Still, can those be also different types of clauses or not?}
 	\item{On the other hand, can we potentially do it? does our solution, on the other hand, provide a constraint on the type of the model, or is this general enough to consider each possible clause at the same time?}
 \end{itemize}
-SQLMiner \cite{Schonig15} uses SQL in a declarative approach to process mining. SQLMiner  exploits traditional SQL queries to retrieve patterns found from a table. This proposes that `existing declarative process mining approaches suffer from performance issues with real life event logs...' and the proposed solution is `fast without limiting itself to detecting certain control-flow constraints'. Clause specific queries e.g. \emph{Response} are provided, that are then processed on the table. Each combination of clause is tested and its conformance against the table is outputted. They also make use of \emph{Support} and \emph{Confidence} values, that are used to determine the precision and reliability of the calculation. If these values are above their respective thresholds, they are included in the result. As queries must run sequentially, only one clause is considered at a time. This is inferior to KnoBAB, which has the ability to process queries one at a time, or multiple simultaneously through the batch computation of the query plan. To generate the conformance for a range of clauses, each respective query must be run, whereas KnoBAB can accept all valid clauses. 
+Some approaches utilise conformance checking as a mechanism to mine declarative processes from an event log. SQLMiner \cite{SchonigRCJM16} uses traditional SQL queries \cite{Schonig15} as a to exercise this. To achieve this, the event log is loaded into the database as table, on which the queries are actioned. Each specified declarative constraint, e.g. \emph{Response}, has been converted into its SQL representation. For every activation and target combination, a parametrized template of the the current clause is generated, and and its conformance against the table. To extend the functionality of each clause, they provide  The authors also calculate \emph{Support} and \emph{Confidence} values \cite{DiCiccio2015}, to determine the precision and reliability of the calculation respectively. Records which do not pass pre-determined \emph{Support} and \emph{Confidence} thresholds are filtered from the data. 
+
+SQL also supports data constraints. The authors demonstrate this using `Resource Assignment Constraints', that provide additional perspectives for a query. However, these additions were only considered as an additional perspective as a whole, and do provide the functionality necessary for payload on an event, nor for Declare. Furthermore, this data exists in isolation from the event information, and is only used as a filter on the data in the log table. KnoBAB provides payload information \emph{per event}, which could also be stored in a separate table as SQLMiner suggests, thus providing greater expressiveness per clause.
+
+SQLMiner queries can be chained together, using {\bf SET UNION}, though this provides no optimization, the queries are still run sequentially, and the query plan is regenerated per query. This is inferior to KnoBAB, which has the ability to process multiple queries simultaneously. This allows for further optimisation of the query plan, which can exploit common sub-expression \emph{across queries}. This query plan can then be parallelized and processed with batch computation per query layer.

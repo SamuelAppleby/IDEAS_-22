@@ -8,3 +8,20 @@ In particular:
 \end{itemize}
 
 Talk about the support of runtime traces (require much less computation than data mining - many fewer clauses, much less data (only 1 trace))
+
+Another possible addition could be the inclusion of external data conditions that are not bound to data payloads. We currently consider target, correlation and theta conditions, but not external factors. 
+
+Therefore, we can represent: 
+
+\emph{`If it has started raining, and the moisture content of the soil is above 50 percent, a flood check must happen if more rain is forecast'}.  
+As a Declare clause, this would formulate:
+
+{\tiny$\mathbf{Response(RainStart \{moistureContent>50\%\}, FloodCheck\{forecast=rain\}) WHERE RainStart\{location\} = FloodCheck\{location\}}$}
+
+What KnoBAB does not currently support, however, is the addition of an external global condition. 
+
+Therefore a constraint such as:
+
+\emph{`If it has started raining, and the moisture content of the soil is above 50 percent, a flood check must happen \textbf{2 days after} if more rain is forecast'}.  
+
+Is not currently supported. The inclusion of these conditions would allow for greater expressiveness of each clause, and therefore the declarative model itself.

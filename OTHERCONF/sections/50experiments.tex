@@ -1,6 +1,8 @@
 \section{Experimental Analysis}
 The benefits from the custom query plan are most obvious in the process mining stage, where a log consisting of potentially thousands of traces is tested against all combinations of clauses. However, computational gains can also be evidenced when the same querying approach is adapted to a runtime scenario, where we are querying only 1 trace against an existing model (which requires much less computation as a whole).
 
+For $\mathcal{C}$ Declare clauses, where $\mathcal{N}$ is the data loading cost, implementations without a KB suffer, resulting in $\mathcal{O(C \cdot N)}$ complexity. With a KB, data loading is necessary only once, enhancing the complexity to $\mathcal{O(C + N)}$.
+
 However these are computationally bottlenecked to the efficiency of these systems themselves, regardless of the optimality of the conformance checking.
 
 SQL miner, due to the query structure, requires vast amounts of secondary memory for temporary caching of query computation, \highlight{much less than KnoBAB requires}.
