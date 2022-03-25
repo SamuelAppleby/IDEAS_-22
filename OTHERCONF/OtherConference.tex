@@ -16,11 +16,24 @@
 
 %%%% COMMENTS
 %% Comments package -- Giacomo
+%\newcommand*{\REVIEWON}{}%
 \usepackage{pdfcomment}
 \usepackage{environ}
 %{\pdfcomment{\BODY}}
 \usepackage{easyReview}
 \makeatother
+
+\ifdefined\REVIEWON
+\newcommand{\RevAdd}[1]{\add{#1}}
+\newcommand{\RevRepl}[2]{\replace{#1}{#2}}
+\newcommand{\RevDel}[1]{\remove{#1}}
+\newcommand{\PopUpComment}[2]{\pdfcomment[author={#1}]{#2}}
+\else
+\newcommand{\RevAdd}[1]{#1}
+\newcommand{\RevRepl}[2]{{#2}}
+\newcommand{\RevDel}[1]{ }
+\newcommand{\PopUpComment}[2]{ }
+\fi
 
 \usepackage{newclude}
 
