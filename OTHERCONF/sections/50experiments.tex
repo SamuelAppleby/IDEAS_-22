@@ -1,3 +1,27 @@
+\begin{table}
+\caption{Queries over the BPI 2012 Challenge from \cite{BurattinMS16}}
+\centering
+	\resizebox{\textwidth}{!}{\begin{tabular}{l|c|c}
+		\toprule
+		\multirow{2}{*}{\textit{Query}} & \multicolumn{2}{c}{Query Time \textit{(ms)}} \\ 
+		& \textsf{Declare Analyzer} & \textbf{KnoBAB}\\
+		\midrule
+		$q_1:= \DeclareClause{Response}{A\_SUBMITTED}{\textbf{true}}{A\_ACCEPTED}{\textbf{true}}$ &  $1.75\cdot 10^3$ & $1.83\cdot 10^1$\\
+		$q_2:= q_1\wedge \MonoDeclareClause{Exists}{\_\_trace\_payload}{\texttt{AMOUNT\_REQ}\geq 10^3}{\geq 1}$ &  $1.77\cdot 10^3$ & $2.06\cdot 10^1$ \\
+		$q_3:=q_1\wedge \MonoDeclareClause{Exists}{\_\_trace\_payload}{\texttt{AMOUNT\_REQ}< 10^3}{\geq 1}$ & $1.62\cdot 10^3$ & $2.15\cdot 10^1$\\
+		$q_4:=q_1\textrm{ where }\texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ & $1.71\cdot 10^3$ & $2.43\cdot 10^1$\\
+		$q_5:=q_1\textrm{ where }\texttt{A\_SUBMITTED.org:resource}\neq\texttt{A\_ACCEPTED.org:resource}$ & $1.93\cdot 10^3$ & $2.59\cdot 10^1$\\
+		$q_1\wedge q_2$ & $1.81\cdot 10^3$ &  $2.70\cdot 10^1$\\
+		$q_1\wedge q_2\wedge q_4$ & $2.49\cdot 10^3$ & $2.74\cdot 10^1$ \\
+		$q_1\wedge q_3\wedge q_4$ & $2.38\cdot 10^3$ & $2.51\cdot 10^1$\\
+		$q_1\wedge q_2\wedge q_5$ &$2.06\cdot 10^3$  & $2.57\cdot 10^1$\\
+		$q_1\wedge q_3\wedge q_5$ & $2.19\cdot 10^3$ & $2.29\cdot 10^1$\\
+		$q_1\wedge q_2\wedge q_3\wedge q_4\wedge q_5$ & $2.90\cdot10^3$ & $2.66\cdot 10^1$ \\
+		\bottomrule
+	\end{tabular}}
+\end{table}
+
+
 \section{Experimental Analysis}
 The benefits from the custom query plan are most obvious in the process mining stage, where a log consisting of potentially thousands of traces is tested against all combinations of clauses. However, computational gains can also be evidenced when the same querying approach is adapted to a runtime scenario, where we are querying only 1 trace against an existing model (which requires much less computation as a whole).
 
