@@ -3,7 +3,7 @@
 \caption{Declare Templates, where $A\wedge p$ ($B\wedge q$) represents the activation (target) condition.}\label{tab:dt}
 \resizebox{\textwidth}{!}{\begin{tabular}{c|l|p{9cm}|l}
 	\toprule
-	Type & Name & Natural Language Specification for Traces & \LTLf\\
+	Type & Name & Natural Language Specification for Traces & \LTLf Operators\\
 	\midrule
 	 \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{\textit{Simple}}}} & \textsf{Init} & The trace should start with an activation & $A\wedge p$\\
 	 & \textsf{Exists} $n$ & Activations should occur at least $n$ times & $\Future(A\wedge p \wedge \Next (\textsf{Exists} (n-1)))$\\
@@ -33,7 +33,7 @@
 
 
 
-\paragraph*{(Data-Aware) Declare} Temporal declarative languages model highly variable scenarios, where state machines provide complicated graph models that can be hardly understandable by the common business stake-holder \cite{PichlerWZPMR11}. Each single temporal condition is expressed through \textit{templates} (i.e., an abstract parameterized property), which are then instantiated on a set of real activation, target, or correlation conditions. We can then categorize each declare template by means of these conditions and the ability of expressing correlations between two temporally distant events happening in one same timeline (\textit{trace}): simple
+\paragraph*{(Data-Aware) Declare}\label{sec:DAD} Temporal declarative languages model highly variable scenarios, where state machines provide complicated graph models that can be hardly understandable by the common business stake-holder \cite{PichlerWZPMR11}. Each single temporal condition is expressed through \textit{templates} (i.e., an abstract parameterized property), which are then instantiated on a set of real activation, target, or correlation conditions. We can then categorize each declare template from \cite{Li2020} by means of these conditions and the ability of expressing correlations between two temporally distant events happening in one same timeline (\textit{trace}): simple
  templates (Table \ref{tab:dt}, rows 1-3) only involving activation conditions; (mutual)
  correlation templates (rows from 4 to 15), which describe a dependency between two
 activation and target conditions, thus including correlations between the two; and negative relation templates (last 2 rows), which describe a negative
