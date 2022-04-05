@@ -1,7 +1,9 @@
 \usepackage{amsmath,amssymb}
-\newcommand{\Next}{\ensuremath{\bigcirc}}
-\newcommand{\Globally}{\ensuremath{\Box}}
-\newcommand{\Future}{\ensuremath{\lozenge}}
+\newcommand{\Next}{\ensuremath{\mathbf{X}}}
+\newcommand{\Globally}{\ensuremath{\mathbf{G}}}
+\newcommand{\Future}{\ensuremath{\mathbf{F}}}
+\newcommand{\WeakUntil}[2]{\ensuremath{{#1}\;\mathbf{W}\;{#2}}}
+\newcommand{\DUntil}[2]{\ensuremath{{#1}\;\mathbf{U}\;{#2}}}
 \newcommand{\MonoDeclareClause}[4]{\textsf{#1}(\texttt{#2},#3,{#4})}
 \newcommand{\DeclareClause}[5]{\textsf{#1}(\texttt{#2},#3,\texttt{#4},#5)}
 \newcommand{\DeclareClauseWithJoin}[6]{\textsf{#1}(\texttt{#2},#3,\texttt{#4},#5)\;\textsf{where}\;#6}

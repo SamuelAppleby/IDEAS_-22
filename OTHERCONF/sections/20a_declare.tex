@@ -1,0 +1,41 @@
+\begin{table}
+	\centering
+\caption{Declare Templates, where $A\wedge p$ ($B\wedge q$) represents the activation (target) condition.}\label{tab:dt}
+\resizebox{\textwidth}{!}{\begin{tabular}{c|l|p{9cm}|l}
+	\toprule
+	Type & Name & Natural Language Specification for Traces & \LTLf\\
+	\midrule
+	 \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{\textit{Simple}}}} & \textsf{Init} & The trace should start with an activation & $A\wedge p$\\
+	 & \textsf{Exists} $n$ & Activations should occur at least $n$ times & $\Future(A\wedge p \wedge \Next (\textsf{Exists} (n-1)))$\\
+	 & \textsf{Absence} $n+1$ & Activations should occur at most $n$ times & $\neg \textsf{Exists}$(n+1)\\
+	 & \textsf{Precedence}  & Events preceding the activations should not satisfy the target & $\WeakUntil{\neg(B\wedge p)}{(A\wedge p)}$\\
+	 \midrule
+	 \parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{\textit{(Mutual) Correlation}}}} 	 & \textsf{ChainPrecedence}  & The target is immediately preceded by the activation. & $\Globally(\Next(B\wedge q)\Rightarrow (A\wedge p))$\\
+	& \textsf{Choice}  & Either the activation or the target condition must appear. & $\Future(A\wedge p)\vee\Future(B\wedge q)$ \\
+	 & \textsf{Response} & The activation is either followed by or simultaneous to  the target. & $\Globally((A\wedge p)\Rightarrow\Future(B\wedge q))$ \\
+	 & \textsf{ChainResponse}  & The activation is immediately followed by the target. & $\Globally((A\wedge p)\Rightarrow \Next(B\wedge q))$\\
+	 & \textsf{RespExistence}  & The activation requires the existence of the target.& $\Future(A\wedge p)\Rightarrow\Future(B\wedge q)$ \\
+	 & \textsf{ExlChoice} & Either the activation \texttt{xor} the target happen. & $(\Future(A\wedge p)\vee \Future(B\wedge q))\wedge \DeclareClause{NotCoExistence}{A}{p}{B}{q}$\\ 
+	 & \textsf{CoExistence}  & \textsf{RespExistence}, or vice versa. & $\Future(A\wedge p)\Rightarrow\Future(B\wedge q)\vee \Future(B\wedge q)\Rightarrow\Future(A\wedge b)$\\
+	 & \textsf{Succession}  & The target should only follow the activation. & $\DeclareClause{Precedence}{A}{p}{B}{q}\wedge \DeclareClause{Response}{A}{p}{B}{q}$\\
+
+	 & \textsf{ChainSuccession}  & Activation immediately follows the target, and the target immediately preceeds the activation. & $\Globally((A\wedge p)\Leftrightarrow\Next(B\wedge q))$\\
+	 & \textsf{AltResponse}  & If an activation occurs, no other activations must happen until the target occurs.  & $\Globally((A\wedge p)\Rightarrow(\DUntil{\neg(A\wedge p)}{(B\wedge q)}))$\\
+	 & \textsf{AltPrecedence}  & Every activation must be preceded by an target, without any other
+	 activation in between &   $\DeclareClause{Precedence}{B}{q}{A}{p}\wedge \Globally((A\wedge p)\Rightarrow \Next(\WeakUntil{\neg(A\wedge p)}{B\wedge q}))$\\
+	 \midrule
+	 
+	 \parbox[t]{2mm}{\multirow{2}{*}{\rotatebox[origin=c]{90}{\textit{Neg.}}}} & \textsf{NotCoExistence} & The activation \texttt{nand} the target happen.&  $\neg(\Future(A\wedge p)\wedge\Future(B\wedge q))$\\
+	 & \textsf{NegSuccession} & The activation requires that no target condition should follow.& $\Globally((A\wedge p)\Rightarrow \neg\Future(B\wedge q))$ \\
+	 \bottomrule
+\end{tabular}}
+\end{table}
+
+
+
+\paragraph*{(Data-Aware) Declare} Temporal declarative languages model highly variable scenarios, where state machines provide complicated graph models that can be hardly understandable by the common business stake-holder \cite{PichlerWZPMR11}. Each single temporal condition is expressed through \textit{templates} (i.e., an abstract parameterized property), which are then instantiated on a set of real activation, target, or correlation conditions. We can then categorize each declare template by means of these conditions and the ability of expressing correlations between two temporally distant events happening in one same timeline (\textit{trace}): simple
+ templates (Table \ref{tab:dt}, rows 1-3) only involving activation conditions; (mutual)
+ correlation templates (rows from 4 to 15), which describe a dependency between two
+activation and target conditions, thus including correlations between the two; and negative relation templates (last 2 rows), which describe a negative
+dependency between two events in correlation. Please observe that, despite some of these condition may appear similar, they generate completely different finite state machine, thus suggesting that these conditions are not interchangeable\footnote{\url{http://ltlf2dfa.diag.uniroma1.it/}}. \texttt{\color{red}[TODO]}
+
