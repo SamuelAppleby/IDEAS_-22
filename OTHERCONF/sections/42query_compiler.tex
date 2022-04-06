@@ -1,4 +1,4 @@
-\subsection{Query Compiler}
+\subsection{Query Compiler}\label{sec:qc}
 The query compiler is structured into three main phases. \textit{First}, we rewrite the data predicates 
 associated to each activity label as a 
 disjunction of mutually exclusive data conditions. We can tune KnoBAB by always atomizing each possible activity label if it exists any Declare Constraint associating it to a data condition as in \cite{bpm21}, or we can choose to provide such an interval decomposition only to the Declare constraints exhibiting data conditions. While the former approach will maximise the access to the \textsf{AttributeTable}s, the latter will maximise the access to the \textsf{ActTable}. By doing so, we can ensure that the data satisfying some given properties can be visited at most once, thus guaranteeting the assumptions from \cite{BellatrecheKB21} also at the data accessing level. Correlation conditions do not undergo this rewriting step. \texttt{\color{red}[TODO: link to the infographic picture, continue the use case example]}

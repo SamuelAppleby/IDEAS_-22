@@ -7,9 +7,10 @@
 \newcommand{\MonoDeclareClause}[4]{\textsf{#1}(\texttt{#2},#3,{#4})}
 \newcommand{\DeclareClause}[5]{\textsf{#1}(\texttt{#2},#3,\texttt{#4},#5)}
 \newcommand{\DeclareClauseWithJoin}[6]{\textsf{#1}(\texttt{#2},#3,\texttt{#4},#5)\;\textsf{where}\;#6}
+\usepackage{xspace}
 \newcommand{\Sdeclare}[3]{\DeclareClause{#1}{#2}{\textbf{true}}{#3}{\textbf{true}}}
-\newcommand{\LTLf}{\textup{LTL}\textsubscript{f}\;}
-\newcommand{\xLTLf}{\texttt{xt}\textup{LTL}\textsubscript{f}\;}
+\newcommand{\LTLf}{\textup{LTL}\textsubscript{f}\xspace}
+\newcommand{\xLTLf}{\texttt{xt}\textup{LTL}\textsubscript{f}\xspace}
 
 \makeatletter
 \newcommand{\ostar}{\mathbin{\mathpalette\make@circled\star}}
