@@ -5,44 +5,49 @@
 	\toprule
 	Type & Name & Natural Language Specification for Traces & \LTLf Operators\\
 	\midrule
-	 \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{\textit{Simple}}}} & \textsf{Init} & The trace should start with an activation & $A\wedge p$\\
-	 & \textsf{Exists} $n$ & Activations should occur at least $n$ times & $\Future(A\wedge p \wedge \Next (\textsf{Exists} (n-1)))$\\
-	 & \textsf{Absence} $n+1$ & Activations should occur at most $n$ times & $\neg \textsf{Exists}$(n+1)\\
-	 & \textsf{Precedence}  & Events preceding the activations should not satisfy the target & $\WeakUntil{\neg(B\wedge p)}{(A\wedge p)}$\\
+	 \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{\textit{Simple}}}} & \textsf{Init($A,p$)} & The trace should start with an activation & $A\wedge p$\\
+	 & \textsf{Exists($A,p,n$)} & Activations should occur at least $n$ times & $\Future(A\wedge p \wedge \Next (\textsf{Exists} (n-1)))$\\
+	 & \textsf{Absence($A,p,n+1$)}  & Activations should occur at most $n$ times & $\neg \textsf{Exists}$(n+1)\\
+	 & \textsf{Precedence($A,p,B,q$)}  & Events preceding the activations should not satisfy the target & $\WeakUntil{\neg(B\wedge p)}{(A\wedge p)}$\\
 	 \midrule
-	 \parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{\textit{(Mutual) Correlation}}}} 	 & \textsf{ChainPrecedence}  & The target is immediately preceded by the activation. & $\Globally(\Next(B\wedge q)\Rightarrow (A\wedge p))$\\
-	& \textsf{Choice}  & Either the activation or the target condition must appear. & $\Future(A\wedge p)\vee\Future(B\wedge q)$ \\
-	 & \textsf{Response} & The activation is either followed by or simultaneous to  the target. & $\Globally((A\wedge p)\Rightarrow\Future(B\wedge q))$ \\
-	 & \textsf{ChainResponse}  & The activation is immediately followed by the target. & $\Globally((A\wedge p)\Rightarrow \Next(B\wedge q))$\\
-	 & \textsf{RespExistence}  & The activation requires the existence of the target.& $\Future(A\wedge p)\Rightarrow\Future(B\wedge q)$ \\
-	 & \textsf{ExlChoice} & Either the activation \texttt{xor} the target happen. & $(\Future(A\wedge p)\vee \Future(B\wedge q))\wedge \DeclareClause{NotCoExistence}{A}{p}{B}{q}$\\ 
-	 & \textsf{CoExistence}  & \textsf{RespExistence}, or vice versa. & $ \DeclareClause{RespExistence}{A}{p}{B}{q}\vee \DeclareClause{RespExistence}{B}{q}{A}{p}$\\
-	 & \textsf{Succession}  & The target should only follow the activation. & $\DeclareClause{Precedence}{A}{p}{B}{q}\wedge \DeclareClause{Response}{A}{p}{B}{q}$\\
+	 \parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{\textit{(Mutual) Correlation}}}} 	 & \textsf{ChainPrecedence($A,p,B,q$) }  & The target is immediately preceded by the activation. & $\Globally(\Next(B\wedge q)\Rightarrow (A\wedge p))$\\
+	& \textsf{Choice($A,p,B,q$) }  & Either the activation or the target condition must appear. & $\Future(A\wedge p)\vee\Future(B\wedge q)$ \\
+	 & \textsf{Response($A,p,B,q$) } & The activation is either followed by or simultaneous to  the target. & $\Globally((A\wedge p)\Rightarrow\Future(B\wedge q))$ \\
+	 & \textsf{ChainResponse($A,p,B,q$) }  & The activation is immediately followed by the target. & $\Globally((A\wedge p)\Rightarrow \Next(B\wedge q))$\\
+	 & \textsf{RespExistence($A,p,B,q$) }  & The activation requires the existence of the target.& $\Future(A\wedge p)\Rightarrow\Future(B\wedge q)$ \\
+	 & \textsf{ExlChoice($A,p,B,q$) } & Either the activation \texttt{xor} the target happen. & $(\Future(A\wedge p)\vee \Future(B\wedge q))\wedge \DeclareClause{NotCoExistence}{A}{p}{B}{q}$\\ 
+	 & \textsf{CoExistence($A,p,B,q$) }  & \textsf{RespExistence}, or vice versa. & $ \DeclareClause{RespExistence}{A}{p}{B}{q}\vee \DeclareClause{RespExistence}{B}{q}{A}{p}$\\
+	 & \textsf{Succession($A,p,B,q$) }  & The target should only follow the activation. & $\DeclareClause{Precedence}{A}{p}{B}{q}\wedge \DeclareClause{Response}{A}{p}{B}{q}$\\
 
-	 & \textsf{ChainSuccession}  & Activation immediately follows the target, and the target immediately preceeds the activation. & $\Globally((A\wedge p)\Leftrightarrow\Next(B\wedge q))$\\
-	 & \textsf{AltResponse}  & If an activation occurs, no other activations must happen until the target occurs.  & $\Globally((A\wedge p)\Rightarrow(\DUntil{\neg(A\wedge p)}{(B\wedge q)}))$\\
-	 & \textsf{AltPrecedence}  & Every activation must be preceded by an target, without any other
+	 & \textsf{ChainSuccession($A,p,B,q$) }  & Activation immediately follows the target, and the target immediately preceeds the activation. & $\Globally((A\wedge p)\Leftrightarrow\Next(B\wedge q))$\\
+	 & \textsf{AltResponse($A,p,B,q$) }  & If an activation occurs, no other activations must happen until the target occurs.  & $\Globally((A\wedge p)\Rightarrow(\DUntil{\neg(A\wedge p)}{(B\wedge q)}))$\\
+	 & \textsf{AltPrecedence($A,p,B,q$) }  & Every activation must be preceded by an target, without any other
 	 activation in between &   $\DeclareClause{Precedence}{B}{q}{A}{p}\wedge \Globally((A\wedge p)\Rightarrow \Next(\WeakUntil{\neg(A\wedge p)}{(B\wedge q)})$\\
 	 \midrule
 	 
-	 \parbox[t]{2mm}{\multirow{2}{*}{\rotatebox[origin=c]{90}{\textit{Neg.}}}} & \textsf{NotCoExistence} & The activation \texttt{nand} the target happen.&  $\neg(\Future(A\wedge p)\wedge\Future(B\wedge q))$\\
-	 & \textsf{NegSuccession} & The activation requires that no target condition should follow.& $\Globally((A\wedge p)\Rightarrow \neg\Future(B\wedge q))$ \\
+	 \parbox[t]{2mm}{\multirow{2}{*}{\rotatebox[origin=c]{90}{\textit{Neg.}}}} & \textsf{NotCoExistence($A,p,B,q$) } & The activation \texttt{nand} the target happen.&  $\neg(\Future(A\wedge p)\wedge\Future(B\wedge q))$\\
+	 & \textsf{NegSuccession($A,p,B,q$)} & The activation requires that no target condition should follow.& $\Globally((A\wedge p)\Rightarrow \neg\Future(B\wedge q))$ \\
 	 \bottomrule
 \end{tabular}}
 \end{table}
 
 
 
-\paragraph*{(Data-Aware) Declare and \LTLf}\label{sec:DAD} Temporal declarative languages model highly variable scenarios, where state machines provide complicated graph models that can be hardly understandable by the common business stake-holder \cite{PichlerWZPMR11}. Each single temporal condition is expressed through \textit{templates} (i.e., an abstract parameterized property), which are then instantiated on a set of real activation, target, or correlation conditions. We can then categorize each declare template from \cite{Li2020} by means of these conditions and the ability of expressing correlations between two temporally distant events happening in one same timeline (\textit{trace}): simple
+\paragraph*{(Data-Aware) Declare and \LTLf}\label{sec:DAD} Temporal declarative languages model highly variable scenarios, where state machines provide complicated graph models that can be hardly understandable by the common business stake-holder \cite{PichlerWZPMR11}. Each single temporal condition is expressed through \textit{templates} (i.e., an abstract parameterized property: Table \ref{tab:dt} column 2), which are then instantiated on a set of real activation, target, or correlation conditions. We can then categorize each declare template from \cite{Li2020} by means of these conditions and the ability of expressing correlations between two temporally distant events happening in one same timeline (\textit{trace}): simple
  templates (Table \ref{tab:dt}, rows 1-3) only involving activation conditions; (mutual)
  correlation templates (rows from 4 to 15), which describe a dependency between two
 activation and target conditions, thus including correlations between the two; and negative relation templates (last 2 rows), which describe a negative
-dependency between two events in correlation. Please observe that, despite some of these condition may appear similar, they generate completely different finite state machine, thus suggesting that these conditions are not interchangeable\footnote{\url{http://ltlf2dfa.diag.uniroma1.it/}}. 
+dependency between two events in correlation. %Please observe that, 
+Despite %some of 
+these templates may appear quite similar, they generate completely different finite state machines, thus suggesting that these conditions are not interchangeable\footnote{\url{http://ltlf2dfa.diag.uniroma1.it/}}. 
 
-As a formal basis for specifying temporal patterns, we adopt the customary choice of of Linear Temporal Logic over finite traces (\LTLf), which interprets formulae over an onbouded, yet finite linear sequence of states. In the context of this paper, consistently with the literature on business
- process execution traces, we make the simplifying assumption that in each point of the sequence, one and only one
-element from $\Sigma$ holds. Given a trace $\sigma^i$, the evaluation of a formula $\varphi$ is done in a given state (i.e., event id, or position) of the trace, and we use the notation $\sigma^i_j\vDash\varphi$ to express that $\varphi$ holds in the position $j$ of $\sigma^i$. We also use $\sigma^i\vDash\varphi$ as a shortcut notation for $\sigma^i_0\vDash\varphi$. This
- denotes that $\varphi$ holds over the entire trace $\sigma$ starting from the very beginning and, consequently, logically captures the
- notion of conformance of $\sigma$ against $\varphi$. We say that $\varphi$ is \textit{satisfiable} if it admits at least one conforming trace. An \LTLf formula $\varphi$ is built by extending propositional logic with temporal operators in bold: \[\varphi:=\textsf{A}\wedge p\;|\;\neg \varphi\;|\;\varphi\vee \varphi'\;|\;\varphi\wedge\varphi'\;|\;\varphi\Rightarrow\varphi'\;|\;\Next{\varphi}\;|\;\Globally{\varphi}\;|\;\Future{\varphi}\;|\;\DUntil{\varphi}{\varphi'}\;|\;\WeakUntil{\varphi}{\varphi'}\;\] where $\Next{\varphi}$ denotes that the condition $\varphi$ should occur from the next state, $\Globally{\varphi}$ denotes that the condition has to hold on the entire subsequent path, $\Future{\varphi}$ denotes that the condition should occur somewhere on the subsequent path, and $\DUntil{\varphi}{\varphi'}$ denotes that $\varphi$ has to hold at least until $\varphi'$ becomes true, either at the current or a future state. Last, $\WeakUntil{\varphi}{\varphi'}:=\DUntil{\varphi}{\varphi'}\vee\Globally{\varphi}$.
+As a formal basis for specifying temporal patterns, Declare adopts %the customary choice of of 
+Linear Temporal Logic over finite traces (\LTLf), which interprets formulae over an onbouded, yet finite linear sequence of states. %In the context of this paper, consistently with the literature on business
+% process execution traces, we make the simplifying assumption that in each point of the sequence, one and only one
+%element from $\Sigma$ holds. 
+Given a trace $\sigma^i$, the evaluation of a formula $\varphi$ is done in a given state (i.e., event id, or position) of the trace, and we use the notation $\sigma^i_j\vDash\varphi$ to express that $\varphi$ holds starting from the $j$-th event of the $i$-th trace. We also use $\sigma^i\vDash\varphi$ as a shortcut notation for $\sigma^i_0\vDash\varphi$. This
+ denotes that $\varphi$ holds over the entire trace $\sigma$ starting from the very beginning. %and, consequently, logically captures the
+ %notion of conformance of $\sigma$ against $\varphi$. 
+ We say that $\varphi$ is \textit{satisfiable} if it admits at least one conforming trace. An \LTLf formula $\varphi$ is built by extending propositional logic with temporal operators in bold: \[\varphi:=\textsf{A}\wedge p\;|\;\neg \varphi\;|\;\varphi\vee \varphi'\;|\;\varphi\wedge\varphi'\;|\;\Next{\varphi}\;|\;\Globally{\varphi}\;|\;\Future{\varphi}\;|\;\DUntil{\varphi}{\varphi'}\] where $\Next{\varphi}$ denotes that the condition $\varphi$ should occur from the next state, $\Globally{\varphi}$ denotes that the condition has to hold on the entire subsequent path, $\Future{\varphi}$ denotes that the condition should occur somewhere on the subsequent path, and $\DUntil{\varphi}{\varphi'}$ denotes that $\varphi$ has to hold at least until $\varphi'$ becomes true, either at the current or a future state. Some operators can be seen as syntactic sugar: $\WeakUntil{\varphi}{\varphi'}:=\DUntil{\varphi}{\varphi'}\vee\Globally{\varphi}$, and $\varphi\Rightarrow\varphi':=(\neg \varphi)\vee (\varphi\wedge \varphi')$.
 
-Despite this formulation has been already extended so to support correlation constraints \cite{BurattinMS16}, such a solution is affected by the following two deficiencies: first, correlation-conditions have to be represented alongside the target condition levels, thus hampering the exploitation of efficient relational database algorithms for joins. On the other hand, \xLTLf operators are associating both or and and operators to such operators, thus allowing the implementation of the and (or) operator as a (full-outer) join algorithms. By doing so, we can also associate the correlation condition to implication operators after rewriting $\varphi\Rightarrow_\Theta\varphi'$ as $(\neg\varphi)\vee(\varphi\wedge_\Theta\varphi')$. Furthermore, these operators can only assess the validity of one trace at a time while, on the other hand, we might need to assess the satisfiability of multiple traces at the same time by composing partial results returned by each single operator. As a consequence, these operators cannot be directly exploited similarly to the relational algebra operators for relational databases. For this reasons, we propose a reformulation of such operators in \S\ref{ssec:xltlf}.
+Despite this formulation has been already extended so to support correlation constraints \cite{BurattinMS16}, such a solution is affected by the following two deficiencies: first, correlation-conditions have to be represented alongside the target condition levels, thus hampering the exploitation of efficient relational database algorithms for correlation conditions via joins. Furthermore, these operators can only assess the validity of one trace at a time while, on the other hand, we might need to assess the satisfiability of multiple traces at the same time by composing partial results returned by each single operator. As a consequence, these operators cannot be directly exploited similarly to the relational algebra operators for relational databases. For this reasons, we propose a reformulation of such operators in \S\ref{ssec:xltlf} (\xLTLf). 
