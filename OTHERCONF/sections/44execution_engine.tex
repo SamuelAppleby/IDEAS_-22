@@ -2,6 +2,10 @@
 \subsection{Execution Engine} \label{ssec:xltlf}
 Algoritms \ref{algo:xltlfAlgo}. \texttt{\color{red}[TODO: \xLTLf Operators]} 
 
+\begin{mdframed}[hidealllines=true,backgroundcolor=orange!20]
+	{$\color{red}\ostar$} On the other hand, \xLTLf operators are associating both or and and operators to such operators, thus allowing the implementation of the and (or) operator as a (full-outer) join algorithms. By doing so, we can also associate the correlation condition to implication operators after rewriting $\varphi\Rightarrow_\Theta\varphi'$ as $(\neg\varphi)\vee(\varphi\wedge_\Theta\varphi')$.
+\end{mdframed}
+
 \begin{itemize}
 	\item What is the input and output format for all of the operators
 	\item What does the sorting assumption guarantee at the operators' implementation level
