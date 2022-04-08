@@ -41,8 +41,12 @@
 
 
 \section{Experimental Analysis}\label{sec:exp}
+
+\subsection{SQLMiner}\label{ssec:sqlmin}
+
 \textbf{PostgreSQL 13.5} implements parallel query plans.
 
+\subsection{Declare Analyzer}\label{ssec:declan}
 
 The benefits from the custom query plan are most obvious in the process mining stage, where a log consisting of potentially thousands of traces is tested against all combinations of clauses. However, computational gains can also be evidenced when the same querying approach is adapted to a runtime scenario, where we are querying only 1 trace against an existing model (which requires much less computation as a whole).
 
