@@ -10,7 +10,7 @@
 	 & \textsf{Absence($A,p,n+1$)}  & Activations should occur at most $n$ times & $\neg \textsf{Exists}$(n+1)\\
 	 & \textsf{Precedence($A,p,B,q$)}  & Events preceding the activations should not satisfy the target & $\WeakUntil{\neg(B\wedge p)}{(A\wedge p)}$\\
 	 \midrule
-	 \parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{\textit{(Mutual) Correlation}}}} 	 & \textsf{ChainPrecedence($A,p,B,q$) }  & The target is immediately preceded by the activation. & $\Globally(\Next(B\wedge q)\Rightarrow (A\wedge p))$\\
+	 \parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{\textit{(Mutual) Correlation}}}} 	 & \textsf{ChainPrecedence($A,p,B,q$) }  & The activation is immediately preceded by the target. & $\Globally(\Next(A\wedge p)\Rightarrow (B\wedge q))$\\
 	& \textsf{Choice($A,p,B,q$) }  & Either the activation or the target condition must appear. & $\Future(A\wedge p)\vee\Future(B\wedge q)$ \\
 	 & \textsf{Response($A,p,B,q$) } & The activation is either followed by or simultaneous to  the target. & $\Globally((A\wedge p)\Rightarrow\Future(B\wedge q))$ \\
 	 & \textsf{ChainResponse($A,p,B,q$) }  & The activation is immediately followed by the target. & $\Globally((A\wedge p)\Rightarrow \Next(B\wedge q))$\\
