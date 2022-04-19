@@ -34,8 +34,8 @@
 	\centering
 	\resizebox{\textwidth}{!}{\begin{tabular}{l|r|rr}
 			\toprule
-			\multirow{2}{*}{\textit{Query}} & \multicolumn{3}{c}{Query Time \textit{(ms)}} \\ 
-			& \textsf{Declare Analyzer} & \textbf{KnoBAB+MaxSat}& \textbf{KnoBAB+Supp}\\
+			\multirow{2}{*}{\textit{Conjunctive Query}} & \multicolumn{3}{c}{Query Time \textit{(ms)}} \\ 
+			& \textsf{Declare Analyzer} & \textbf{KnoBAB+Conj}& \textbf{KnoBAB+Supp}\\
 			\midrule
 			$q_1:= \DeclareClause{Response}{A\_SUBMITTED}{\textbf{true}}{A\_ACCEPTED}{\textbf{true}}$ &  $\color{red}1.75\cdot 10^3$ & $\mathbf{1.83}\cdot \mathbf{10}^\mathbf{1}$& $2.19\cdot 10^1$\\
 			$q_2:= q_1\wedge \MonoDeclareClause{Exists}{\_\_trace\_payload}{\texttt{AMOUNT\_REQ}\geq 10^3}{\geq 1}$ &  $\color{red}1.77\cdot 10^3$ & $\mathbf{2.06}\cdot \mathbf{10}^\mathbf{1}$ & $2.45\cdot 10^1$ \\
