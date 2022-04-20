@@ -50,7 +50,7 @@ Each \xLTLf operator is going to both return and/or accept data in the result re
 			\begin{algorithmic}[1]
 				\Statex
 				\Function{Future}{$\phi$}
-				\State {\textbf{Require:\;}sorted($\varphi$)}
+				\State {\textbf{Require:\;}sorted($\phi$)}
 				\ForAll{$\braket{t,e,L}\in\phi$}
 				\textbf{yield} $\braket{t,e,\bigcup\Set{L'|\braket{t,e',L'}\in\phi\texttt{\textbf{\;and\;}}e'\geq e}}$
 				\EndFor
