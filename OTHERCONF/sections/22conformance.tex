@@ -31,7 +31,7 @@ with payload conditions, as well as no correlation ones.
 
 {Despite the authors } provide additional {data} perspectives through `Resource Assignment Constraints' clauses, distinct from the Declare ones, these additions were only considered  {as trace payload}. On the other hand, KnoBAB provides payload information {both \emph{per trace}} and \emph{per event}, which could also be stored in a separate table as SQLMiner suggests, thus providing greater expressiveness per clause.
 
-SQLMiner queries can be chained together, using \texttt{\textbf{SET UNION}}, though this provides no possibility for testing which are the clauses that are satisfied by the majority of the traces (MSP). These query plans are not optimized as in \cite{BellatrecheKB21}, thus failing at both minimizing the data access
+SQLMiner queries can be chained together, using \texttt{\textbf{SET UNION}}, though this provides no possibility for testing which are the clauses that are satisfied by the majority of the traces (Max-SAT). These query plans are not optimized as in \cite{BellatrecheKB21}, thus failing at both minimizing the data access
 and running multiple shared sub-queries only once.
 This is inferior to KnoBAB, which has the ability to process multiple 
 declarative clauses from disparate templates in the same query plan.
