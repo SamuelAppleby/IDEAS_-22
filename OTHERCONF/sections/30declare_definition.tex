@@ -38,7 +38,7 @@ The remaining operators merge multiple operators together when %it is possible t
 a specific implementation outperforms%ing 
 the execution of the operators separately:
  %each single operation: 
- e.g., $\textsf{AndGlobally}(\phi,\phi',\Theta)$ is equivalent to $\textsf{And}(\phi,\textsf{Globally}(\phi'),\Theta)$, but preliminary experiments reveal that the former has a more efficient implementation than than computing the latter. This choice was inspired by relational algebra, where $\theta$-joins are usually more efficient than performing a join and a selection operation separately.
+ e.g., $\textsf{AndGlobally}(\phi,\phi',\Theta)$ is equivalent to $\textsf{And}(\phi,\textsf{Globally}(\phi'),\Theta)$, but preliminary experiments reveal that the former has a more efficient implementation than computing the latter. This choice was inspired by relational algebra, where $\theta$-joins are usually more efficient than performing a join and a selection operation separately.
  On the other hand, % Similarly,  we can associate the correlation condition to implication operators after rewriting 
  $\textsf{Implies}(\phi,\phi',\Theta)$ is rewritten as $\textsf{Or}(\textsf{Not}(\phi),\,\textsf
 {And}(\phi,\phi',\Theta),\,\textbf{true})$.

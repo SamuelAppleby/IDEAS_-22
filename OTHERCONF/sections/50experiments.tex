@@ -23,38 +23,52 @@ These benchmarks were carried out on a Razer Blade Pro laptop with Intel Core i7
 \begin{figure}[!t]
 	\centering
 	\includegraphics[width=.8\textwidth]{images/sqlminer_benchmark.pdf}
-	\caption{KnoBAB vs SQLMiner Performance for 8 Common Clauses with Support and Trace Information. OOM indicates Out of Memory, where $>$ 315GB of secondary memory was used (causing memory failure).}\label{fig:vsSQL}
+	\caption{KnoBAB vs SQLMiner Performance for Varying Model Size.}\label{fig:vsSQL}
 \end{figure}
 
 \subsection{SQLMiner}\label{ssec:sqlmin}
 
 \textbf{PostgreSQL 13.5}  (\figurename~\ref{fig:vsSQL})
 
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=.8\textwidth]{images/burattin_benchmark.pdf}
+	\caption{KnoBAB vs Declare Analyzer Performance for Different Models.}\label{fig:vsSQL}
+\end{figure}
+
+\subsection{Declare Analyzer}\label{ssec:declan}
 
 \begin{table}[!t]
-	\caption{Satisfiability over the BPI 2012 Challenge}
-	\centering
-	\resizebox{\textwidth}{!}{\begin{tabular}{l|r|rr}
+	\caption{Declare Models with their Respective Clauses}
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{l|l}
+			Model & Queries \\
 			\toprule
-			\multirow{2}{*}{\textit{Conjunctive Query}} & \multicolumn{3}{c}{Query Time \textit{(ms)}} \\ 
-			& \textsf{Declare Analyzer} & \textbf{KnoBAB+Conj}& \textbf{KnoBAB+Supp}\\
-			\midrule
-			$q_1:= \DeclareClause{Response}{A\_SUBMITTED}{\textbf{true}}{A\_ACCEPTED}{\textbf{true}}$ &  $\color{red}1.75\cdot 10^3$ & $\mathbf{1.83}\cdot \mathbf{10}^\mathbf{1}$& $2.19\cdot 10^1$\\
-			$q_2:= q_1\wedge \MonoDeclareClause{Exists}{\_\_trace\_payload}{\texttt{AMOUNT\_REQ}\geq 10^3}{\geq 1}$ &  $\color{red}1.77\cdot 10^3$ & $\mathbf{2.06}\cdot \mathbf{10}^\mathbf{1}$ & $2.45\cdot 10^1$ \\
-			$q_3:=q_1\wedge \MonoDeclareClause{Exists}{\_\_trace\_payload}{\texttt{AMOUNT\_REQ}< 10^3}{\geq 1}$ & $\color{red}1.62\cdot 10^3$ & $\mathbf{2.15}\cdot \mathbf{10}^\mathbf{1}$&  $2.51\cdot 10^1$\\
-			$q_4:=q_1\textrm{ where }\texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ & $\color{red}1.71\cdot 10^3$ & $\mathbf{2.43}\cdot \mathbf{10}^\mathbf{1}$& $2.77\cdot 10^1$\\
-			$q_5:=q_1\textrm{ where }\texttt{A\_SUBMITTED.org:resource}\neq\texttt{A\_ACCEPTED.org:resource}$ & $\color{red}1.93\cdot 10^3$ & $\mathbf{2.59}\cdot \mathbf{10}^\mathbf{1}$& $3.01\cdot 10^1$\\
-			$q_1\wedge q_2$ & $\color{red}1.81\cdot 10^3$ &  $\mathbf{2.70}\cdot \mathbf{10}^\mathbf{1}$& $3.05\cdot 10^1$\\
-			$q_1\wedge q_2\wedge q_4$ & $\color{red}2.49\cdot 10^3$ & $\mathbf{2.74}\cdot \mathbf{10}^\mathbf{1}$ & $3.15\cdot 10^1$\\
-			$q_1\wedge q_3\wedge q_4$ & $\color{red}2.38\cdot 10^3$ & $\mathbf{2.51}\cdot \mathbf{10}^\mathbf{1}$& $2.80\cdot 10^1$\\
-			$q_1\wedge q_2\wedge q_5$ &$\color{red}2.06\cdot 10^3$  & $\mathbf{2.57}\cdot \mathbf{10}^\mathbf{1}$& $2.95\cdot 10^1$\\
-			$q_1\wedge q_3\wedge q_5$ & $\color{red}2.19\cdot 10^3$ & $\mathbf{2.29}\cdot \mathbf{10}^\mathbf{1}$& $2.55\cdot 10^1$\\
-			$q_1\wedge q_2\wedge q_3\wedge q_4\wedge q_5$ & $\color{red}2.90\cdot10^3$ & $\mathbf{2.66}\cdot \mathbf{10}^\mathbf{1}$ & $3.01\cdot 10^1$\\
-			\bottomrule
+			\multirow{2}{*}{$M\_1=$} & $q_{1}:= \DeclareClause{Response}{A\_SUBMITTED}{\textbf{true}}{A\_ACCEPTED}{\textbf{true}}$ \\ & $q_{2}:= \DeclareClause{Response}{A\_SUBMITTED}{\texttt{AMOUNT\_REQ} \geq 10^3}{A\_ACCEPTED}{\textbf{true}}$ \\&
+			$q_{3}:= \DeclareClause{Response}{A\_SUBMITTED}{\texttt{AMOUNT\_REQ} < 10^3}{A\_ACCEPTED}{\textbf{true}}$ \\&
+			$q_{4}:= q_{1} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{5}:= q_{1} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}\neq\texttt{A\_ACCEPTED.org:resource}$ \\
+			\toprule
+			\multirow{2}{*}{$M\_2=M_1+$} & $q_{6}:= \DeclareClause{Response}{W\_Completeren aanvraag}{\textbf{true}}{W\_Valideren aanvraag}{\textbf{true}}$ \\ &
+			$q_{7}:= \DeclareClause{Response}{W\_Completeren aanvraag}{\textbf{true}}{O\_CANCELLED}{\textbf{true}}$ \\&
+			$q_{8}:= q_{6} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}\neq\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{9}:= \DeclareClause{Response}{W\_Valideren aanvraag}{\texttt{AMOUNT\_REQ} = 5 * 10^3}{O\_CANCELLED}{\textbf{true}} $ \\&
+			$q_{10}:= q_{9} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\
+			\toprule
+			\multirow{2}{*}{$M\_3=M_2+$} & $q_{11}:= \DeclareClause{Response}{O\_SELECTED}{\textbf{true}}{O\_CANCELLED}{\textbf{true}}$ \\&
+			$q_{12}:= q_{11} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{13}:= \DeclareClause{Response}{O\_SELECTED}{\texttt{AMOUNT\_REQ} < 8 * 10^3}{O\_CANCELLED}{\textbf{true}}$ \\&
+			$q_{14}:= q_{13} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{15}:= \DeclareClause{Response}{O\_SELECTED}{\texttt{AMOUNT\_REQ} > 10^3}{O\_CANCELLED}{\textbf{true}}$ \\
+			\toprule
+			\multirow{2}{*}{$M\_4=M_3+$} & $q_{16}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\textbf{true}}{A\_DECLINED}{\textbf{true}}$ \\&
+			$q_{17}:= q_{16} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{18}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\texttt{AMOUNT\_REQ} > 2 * 10^4}{A\_DECLINED}{\textbf{true}}$ \\&
+			$q_{19}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\texttt{AMOUNT\_REQ} > 2 * 10^4}{A\_CANCELLED}{\textbf{true}}$ \\&
+			$q_{20}:= q_{18} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\
 	\end{tabular}}
 \end{table}
 
-\subsection{Declare Analyzer}\label{ssec:declan}
 
 The benefits from the custom query plan are most obvious in the process mining stage, where a log consisting of potentially thousands of traces is tested against all combinations of clauses. However, computational gains can also be evidenced when the same querying approach is adapted to a runtime scenario, where we are querying only 1 trace against an existing model (which requires much less computation as a whole).
 
