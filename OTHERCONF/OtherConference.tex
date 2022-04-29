@@ -40,7 +40,9 @@
 \fi
 
 \usepackage{newclude}
-
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{adjustbox}
 
 %% Swiggly notes -- Giacomo
 \usepackage{xparse}
@@ -188,7 +190,7 @@
 ~\\
 \begin{abstract}
 	
-State of the art approaches on model checking for declarative temporal models, involving temporal correlation between events happening at different times, exploit computationally intensive solutions. While ad-hoc non relational-database related solutions perform multiple scans of the input data, as the model checking if performed at each single temporal constraint within the model, relational databases are bottlenecked by accessing the same events multiple times and by costly aggregation operations. In order to efficiently exploit the relational model, we propose KnoBAB, a relational database engine composed of novel specialised operators, thus extending both formal definitions of such temporal models and providing a straightforward implementation on top of the relational model. As our trace logs are data-aware, we make also such operators support event correlations as $\Theta$-join operations for the first time. Experiment shows almost linear time complexity with the number of temporal clauses, thus overcoming quadratic costs from relational databases and inefficient non-database solutions not exploiting efficient query plans. The resulting system can be then exploited in real-time scenarios, such as video games and cyber-security systems.
+State of the art approaches on model checking for declarative temporal models, involving temporal correlation between events happening at different times, exploit computationally intensive solutions. While ad-hoc non relational-database related solutions perform multiple scans of the input data, as the model checking is performed at each single temporal constraint within the model, relational databases are bottlenecked by accessing the same events multiple times and by costly aggregation operations. In order to efficiently exploit the relational model, we propose KnoBAB, a relational database engine composed of novel specialised operators, thus extending both formal definitions of such temporal models and providing a straightforward implementation on top of the relational model. As our trace logs are data-aware, we make also such operators support event correlations as $\Theta$-join operations for the first time. Experiment shows almost linear time complexity with the number of temporal clauses, thus overcoming quadratic costs from relational databases and inefficient non-database solutions not exploiting efficient query plans. The resulting system can be then exploited in real-time scenarios, such as video games and cyber-security systems.
 
 %the context or background information for your research; the general topic under study; the specific topic of your research
 %
