@@ -8,7 +8,7 @@ structuring queries in a query plan \cite{BellatrecheKB21} %(that this approach 
 In addition, the authors' proposed (yet unimplemented) parallelization is rather inflexible: by only parallelising on the execution of each single statement, we still risk to re-compute the same sub-queries multiple times, thus tampering the potential speed-up gain.
 
 While data conditions are considered, the authors regard only one predicate per event in their experiments, where no logical connectors are considered. Therefore, multiple data conditions cannot be combined through either conjunction or disjunction, limiting the possible expressiveness of the conformance calculation. For example, queries such as 
-$\DeclareClause{Response}{RainStart}{\\moistureContent>50\% \wedge consecutiveRain>3}{FloodCheck}{forecast=rain}$ \pdfcomment[author=Giacomo]{Always use the same running example use case example for the Declare Clause}
+$\DeclareClause{Response}{RainStart}{\\moistureContent>50\% \wedge consecutiveRain>3}{FloodCheck}{forecast=rain}$ 
 %$\mathbf{Response(RainStart \{moistureContent>50\%  \& consecutiveRain>3\}, FloodCheck\{forecast=rain\})}$
 are only possible by running a query per data condition and intersecting the returned set. KnoBAB provides the ability to combine several conditions per event, allowing queries like above to be processed. As per their implementation of the \LTLf operators, authors do not exploit efficient relational algebra operators when possible, as full-outer-theta-joins (or theta-joins) for unions (or conjunctions) with correlation conditions.
 
