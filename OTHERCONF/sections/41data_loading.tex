@@ -14,6 +14,10 @@ key $k$. %As each data condition is always associated to a given activity label,
 After loading the whole dataset, the number of the traces within the log ($|\mathcal{L}|$), the length $\ell_j$ for each trace $\sigma^j$, and the number of distinct activity labels ($|\Sigma|$) is known. Given this, we can get the number of occurrences of each $i$-th activity label from $\Sigma$ in each trace by directly accessing the rows within the \textsf{CountingTable} within the range $[|\mathcal{L}|\cdot (i-1) + 1,\; |\mathcal{L}|\cdot i]$.
 %we can determine the number of occurrences of each $i$-th activity label in $\Sigma$ for each trace $\sigma^j\in\mathcal{L}$ by accessing the rows from  without the need of any external indexing data structure. 
 %<<<<<<< HEAD
+%<<<<<<< HEAD
+%=======
+%<<<<<<< nosam
+%>>>>>>> b69bdd98c4f898e5f4801fc44cbae460ecd04aef
 %\texttt{\color{red}[TODO: link to the infographic picture, continue the use case example]}. On the other hand, the loading and and indexing phase generates an \textsf{ActivityTable} associated to two indices, a primary index and a secondary index. While the former allows to effectively return all of the events associated to a specific activity label, the latter is used to access to either the first and to the last event in a trace. If required, pointers associated to each record allow temporally scanning the traces as a double linked list. \texttt{\color{red}[TODO: link to the infographic picture, continue the use case example]}
 
 %\texttt{\color{red}[TODO: discuss how the output of each table can be represented into the result representation]}
@@ -22,7 +26,11 @@ After loading the whole dataset, the number of the traces within the log ($|\mat
 %=======
 On the other hand, the loading and and indexing phase generates an \textsf{ActivityTable} associated to two indices, a primary index and a secondary index. While the former allows to effectively return all of the events associated to a specific activity label, the latter is used to access to either the first and to the last event in a trace. If required, pointers associated to each record allow temporally scanning the traces as a double linked list. From \figurename~\ref{fig:knobab_pipeline}, the offset for the third event (B) in the \textsf{CountingTable} can then be calculated by would be $[3 \cdot (3-1) + 1, 3 \cdot 3] = [7,9]$. Given that this counting table computes only for untimed operations, the intermediate result for untimed \textsf{Exists}$(1,B,\textbf{true})$ within this range are provided as $\Set{\braket{1,1,\emptyset}, \braket{2,1,\emptyset}}$, as the third trace never contains a B, therefore is not included in the result.
 Details of the loading and indexing phase are omitted due to the page limits.
+%<<<<<<< HEAD
 %>>>>>>> 3a6e4d5b1f0a9d9f27e0e9f9588e3f0f743bda2c
+%=======
+%>>>>>>> main
+%>>>>>>> b69bdd98c4f898e5f4801fc44cbae460ecd04aef
 
 
 
