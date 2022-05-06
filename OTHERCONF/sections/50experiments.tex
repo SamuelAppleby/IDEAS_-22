@@ -44,6 +44,7 @@ The outcome of such experiments is represented in \figurename~\ref{fig:vsSQL}, w
 The set of experiments on Declare Analyzer have the aim of comparing our proposed solution against a solution tailored for solving Declare Conjunctive Queries over logs running exclusively in primary memory. %In particular, we want to show the benefit of running a query plan when multiple sub-queries are shared: by increasing the size of the model by adding novel queries, we are expecting that while our solution exhibits a near constant running time, Declare Analyzer's running time should increase almost linearly as per the authors' claim.
 %=======
 \begin{table}[!t]
+	\label{table:burattin_model}
 	\centering
 	\caption{Declare Models with their Respective Clauses}
 	\resizebox{.7\textwidth}{!}{
@@ -77,14 +78,18 @@ The set of experiments on Declare Analyzer have the aim of comparing our propose
 \begin{figure}[!t]
 	\centering
 	\includegraphics[width=.65\textwidth]{images/burattin_benchmark.pdf}
-	\caption{KnoBAB vs Declare Analyzer Performance for Different Models.}\label{fig:vsSQL}
+	\caption{KnoBAB vs Declare Analyzer Performance for Different Models. Knobab + CQ indicates the intersection, per trace, of all the satisfaction result representations i.e. returning  the traces that fulfilled all the clauses.}\label{fig:vsSQL}
 \end{figure}
 
 %>>>>>>> 33357ef815c5a234b684fdafdceed45bf3a89be0
 
-In order to do so, we exploited the entire BPI 2012 Challenge dataset, also used in \cite{BurattinMS16}, and we slightly edited the queries in the same paper as illustrated in \figurename~\ref{fig:vsBuatto}. For Declare Analyzer, we choosed to load the dataset via MapDB\footnote{\url{https://mapdb.org/}}, thus aligning the authors' hash map representations of the dataset with a representation similar to the one for relational databases. 
+In order to do so, we exploited the BPI 2012 Challenge dataset, also used in \cite{BurattinMS16}, and we slightly edited the queries in the same paper as illustrated in \figurename~\ref{fig:vsBuatto}. For Declare Analyzer, we chose to load the dataset via MapDB\footnote{\url{https://mapdb.org/}}, thus aligning the authors' hash map representations of the dataset with a representation similar to the one for relational databases. 
 
-Our experiments show that while our proposed solution has temporal fluctuations caused by the fact that the query was running on the order of the milliseconds, the running time for Declare Analyzer is constantly increasing with the number of the available queries. Overall, our solution outperforms by 2-3 orders of magnitude the one from Declare Analyzer.
+Our experiments indicate that, overall, we are 2-3 times orders of magnitude more performant than DeclareAnalyzer. \texttt{KnoBAB + CQ} demonstrates greater performance that \texttt{KnoBAB + Support}, as the calculations required for the support values per clause are more costly for smaller models. Though this is within only within the order of the milliseconds. For an increase in model size, Declare Analyzer has a much greater time increase than KnoBAB (the best case for Declare Analyzer is over an order of magnitude greater than that of KnoBAB). Regarding scalability, the former exhibits better performance than KnoBAB, where the complexity increase is less than that of KnoBAB. 
+
+To explain this, we encourage the reader to refer back to the query plan from \figurename~\ref{fig:knobab_pipeline} with reference to the model from \tablename~\ref{table:burattin_model}. With each increase in model size, entirely new event labels and data payloads are considered (albeit the conditions within each sub-model are similar). As KnoBAB thrives when data access can be limited, the addition of new data requires more decomposition within the atomization pipeline, and, as more atoms are now considered, querying will also suffer. As a result, the complexity increase is worse than examples tailored to benefit data access limiting (\figurename~\ref{fig:vsBuatto}).
+
+%Our experiments show that while our proposed solution has temporal fluctuations caused by the fact that the query was running on the order of the milliseconds, the running time for Declare Analyzer is constantly increasing with the number of the available queries. Overall, our solution outperforms by 2-3 orders of magnitude the one from Declare Analyzer.%
 
 
 %The benefits from the custom query plan are most obvious in the process mining stage, where a log consisting of potentially thousands of traces is tested against all combinations of clauses. However, computational gains can also be evidenced when the same querying approach is adapted to a runtime scenario, where we are querying only 1 trace against an existing model (which requires much less computation as a whole).
