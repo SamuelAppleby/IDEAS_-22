@@ -13,10 +13,8 @@ traces are likely to adhere to the expected clinical standards.
 	\begin{subfigure}{.7\columnwidth}
 		\includegraphics[width=\linewidth]{images/ActivationTargetExample.pdf}
 	\end{subfigure}
-	\begin{subfigure}{\columnwidth}
-		\centering
-		\bigskip
-		\begin{tabular}{c c} 
+	\begin{subfigure}{.27\columnwidth}
+		\resizebox{\textwidth}{!}{\begin{tabular}{c c} 
 			\hline
 			Label & Event \\ 
 			\hline
@@ -25,7 +23,7 @@ traces are likely to adhere to the expected clinical standards.
 			\it{p\_r} & patient\_registered \\
 			\it{p\_d} & patient\_dismissed \\
 			\hline 
-		\end{tabular}
+		\end{tabular}}
 	\end{subfigure}
 	\caption{Two exemplifying clauses distinguishing \textsf{Response} and \textsf{Precedence} behaviours. Traces are represented as temporally ordered events associated to activity labels (boxed). Activation  (or target) conditions are here circled (or ticked/crossed). Ticks (or crosses) indicate a (un)successful match of a target condition. For all activations there must be an un-failing target condition; for precedence, we shall consider at most one activation (\S\ref{sec:DAD}). These conditions require the usage of multiple join tests per trace.}
 	\label{fig:comparison}
