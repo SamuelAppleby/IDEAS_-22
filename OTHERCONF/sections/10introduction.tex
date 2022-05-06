@@ -8,14 +8,36 @@ for predicting which novel clinical situations represented as %on the novel hosp
 traces are likely to adhere to the expected clinical standards.
 % \RevRepl{this}{the resulting mined} model \RevRepl{for a current trace to provide the action}{for determining} which \RevAdd{clinical situation} is likely to \RevRepl{be  the next correct decision}{adhere to the expected clinical standards}.
 
-\begin{figure}
+\begin{figure}[ht]
 	\centering
-	\includegraphics[width=.7\textwidth]{images/ActivationTargetExample.pdf}
-	\caption{Two exemplifying clauses distinguishing \textsf{Response} and \textsf{Precedence} behaviours. Traces are represented as temporally ordered events associated to activity labels (boxed). Activation  (or target) conditions are here circled (or ticked/crossed). Ticks (or crosses) indicate a (un)successful match of a target condition. For all activations there must be an un-failing target condition; for precedence, we shall consider at most one activation (\S\ref{sec:DAD}). These conditions require the usage of multiple join tests per trace.}\label{fig:comparison}
+	\begin{subfigure}{.7\columnwidth}
+		\includegraphics[width=\linewidth]{images/ActivationTargetExample.pdf}
+	\end{subfigure}
+	\begin{subfigure}{\columnwidth}
+		\centering
+		\bigskip
+		\begin{tabular}{c c} 
+			\hline
+			Label & Event \\ 
+			\hline
+			\it{a\_a} & audit\_analysis \\
+			\it{e\_p} & equipment\_purchase \\
+			\it{p\_r} & patient\_registered \\
+			\it{p\_d} & patient\_dismissed \\
+			\hline 
+		\end{tabular}
+	\end{subfigure}
+	\caption{Two exemplifying clauses distinguishing \textsf{Response} and \textsf{Precedence} behaviours. Traces are represented as temporally ordered events associated to activity labels (boxed). Activation  (or target) conditions are here circled (or ticked/crossed). Ticks (or crosses) indicate a (un)successful match of a target condition. For all activations there must be an un-failing target condition; for precedence, we shall consider at most one activation (\S\ref{sec:DAD}). These conditions require the usage of multiple join tests per trace.}
+	\label{fig:comparison}
 \end{figure}
+
 %\pdfcomment[author=Giacomo]{Please link this description to the infographics, that is going to describe the whole KnoBAB pipeline}
 When a trace does not adhere to the model, we say that the trace is \textit{deviant} \cite{bpm21}. %\RevDel{In the case of traces, the order of the events is important, and temporal information of each event must be stored.}
-E.g., Given a Declare template \textsf{Response}, \DeclareClause{Response}{A}{\textbf{true}}{B}{\textbf{true}} is the instantiated Declare \textit{clause} for \textit{activity labels} \texttt{A} and \texttt{B} stating ``\emph{If event \texttt{A}  happens, event \texttt{B}  must happen either contemporarily or anytime in the future}'' (\figurename~\ref{fig:comparison}); \texttt{A}  (\texttt{B}) is called  \textit{activation} (\textit{target}) condition; a trace would be a deviant \emph{iff.} a trace contained an instance of \texttt{A}  that was not followed by an instance of \texttt{B}. In \figurename~\ref{fig:comparison}, the last trace is the only deviant one. Furthermore, \textbf{true} predicates associated to activation (target) conditions can be enriched to express data conditions (\S\ref{sec:DAD}). As any declarative language, the specification of such templates can be expressed as expressions of logical operators: in this field, Finite Liniear Time Logic (\LTLf) is usually exploited. For instance, clause $\DeclareClause{Precedence}{A}{p}{B}{q}$ becomes $\WeakUntil{\neg(\texttt{B} \wedge q)}{(\texttt{A} \wedge p)}$, %\pdfcomment[author=Giacomo]{Please link this description to the infographics, that is going to describe the whole KnoBAB pipeline} 
+E.g., Given a Declare template \textsf{Response}, \DeclareClause{Response}{A}{\textbf{true}}{B}{\textbf{true}} is the instantiated Declare \textit{clause} for \textit{activity labels} \texttt{A} and \texttt{B} stating ``\emph{If event \texttt{A}  happens, event \texttt{B}  must happen either contemporarily or anytime in the future}'' (\figurename~\ref{fig:comparison}); \texttt{A}  (\texttt{B}) is called  \textit{activation} (\textit{target}) condition; a trace would be a deviant \emph{iff.} a trace contained an instance of \texttt{A}  that was not followed by an instance of \texttt{B}. 
+
+
+
+In \figurename~\ref{fig:comparison}, the last trace is the only deviant one. Furthermore, \textbf{true} predicates associated to activation (target) conditions can be enriched to express data conditions (\S\ref{sec:DAD}). As any declarative language, the specification of such templates can be expressed as expressions of logical operators: in this field, Finite Liniear Time Logic (\LTLf) is usually exploited. For instance, clause $\DeclareClause{Precedence}{A}{p}{B}{q}$ becomes $\WeakUntil{\neg(\texttt{B} \wedge q)}{(\texttt{A} \wedge p)}$, %\pdfcomment[author=Giacomo]{Please link this description to the infographics, that is going to describe the whole KnoBAB pipeline} 
 where the binary operator $\WeakUntil{}{}$ denotes that either left-hand-side should always occur until the right- one is found for the first time in the trace, or the left-hand-side should always occur (\figurename~\ref{fig:comparison}). %Activation and target 
 Conditions might %be 
 also include % extended with 
