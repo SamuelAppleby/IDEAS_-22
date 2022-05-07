@@ -58,18 +58,18 @@ The set of experiments on Declare Analyzer have the aim of comparing our propose
 			\toprule
 			\multirow{5}{*}{$M_2=M_1+$}\rdelim\{{5}{3mm} & $q_{6}:= \DeclareClause{Response}{W\_Completeren aanvraag}{\textbf{true}}{W\_Valideren aanvraag}{\textbf{true}}$ \\ &
 			$q_{7}:= \DeclareClause{Response}{W\_Completeren aanvraag}{\textbf{true}}{O\_CANCELLED}{\textbf{true}}$ \\&
-			$q_{8}:= q_{6} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}\neq\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{8}:= q_{6} \textrm{ where } \texttt{W\_Valideren aanvraag.org:resource}\neq\texttt{W\_Valideren aanvraag.org:resource}$ \\&
 			$q_{9}:= \DeclareClause{Response}{W\_Valideren aanvraag}{\texttt{AMOUNT\_REQ} = 5 \cdot 10^3}{O\_CANCELLED}{\textbf{true}} $ \\&
-			$q_{10}:= q_{9} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\
+			$q_{10}:= q_{9} \textrm{ where } \texttt{W\_Valideren aanvraag.org:resource}=\texttt{O\_CANCELLED.org:resource}$ \\
 			\toprule
 			\multirow{5}{*}{$M_3=M_2+$}\rdelim\{{5}{3mm} & $q_{11}:= \DeclareClause{Response}{O\_SELECTED}{\textbf{true}}{O\_CANCELLED}{\textbf{true}}$ \\&
-			$q_{12}:= q_{11} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{12}:= q_{11} \textrm{ where } \texttt{O\_SELECTED.org:resource}=\texttt{O\_CANCELLED.org:resource}$ \\&
 			$q_{13}:= \DeclareClause{Response}{O\_SELECTED}{\texttt{AMOUNT\_REQ} < 8 \cdot 10^3}{O\_CANCELLED}{\textbf{true}}$ \\&
-			$q_{14}:= q_{13} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{14}:= q_{13} \textrm{ where } \texttt{O\_SELECTED.org:resource}=\texttt{O\_CANCELLED.org:resource}$ \\&
 			$q_{15}:= \DeclareClause{Response}{O\_SELECTED}{\texttt{AMOUNT\_REQ} > 10^3}{O\_CANCELLED}{\textbf{true}}$ \\
 			\toprule
 			\multirow{5}{*}{$M_4=M_3+$} \rdelim\{{5}{3mm}& $q_{16}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\textbf{true}}{A\_DECLINED}{\textbf{true}}$ \\&
-			$q_{17}:= q_{16} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\&
+			$q_{17}:= q_{16} \textrm{ where } \texttt{A\_PARTLYSUBMITTED.org:resource}=\texttt{A\_DECLINED.org:resource}$ \\&
 			$q_{18}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\texttt{AMOUNT\_REQ} > 2 \cdot 10^4}{A\_DECLINED}{\textbf{true}}$ \\&
 			$q_{19}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\texttt{AMOUNT\_REQ} > 2 \cdot 10^4}{A\_CANCELLED}{\textbf{true}}$ \\&
 			$q_{20}:= q_{18} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\
