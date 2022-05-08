@@ -6,7 +6,7 @@ These benchmarks were carried out on a Razer Blade Pro laptop: Intel Core i7-108
 	\centering
 %%<<<<<<< HEAD
 	\includegraphics[width=.65\textwidth]{images/sqlminer_benchmark.pdf}
-	\caption{KnoBAB vs SQLMiner Performance for 25  clauses with frequent activity labels with Support and Trace Information. OOM indicates Out of Primary Memory.}\label{fig:vsSQL}
+	\caption{KnoBAB vs SQLMiner Performance for 25 clauses with frequent activity labels with Support and Trace Information. OOM indicates Out of Secondary Memory for logs containing $10^3$ traces (followed by time taken for exception to occur).}\label{fig:vsSQL}
 %=======
 %	\caption{KnoBAB vs SQLMiner Performance for Varying Model Size.}\label{fig:vsSQL}
 %>>>>>>> 33357ef815c5a234b684fdafdceed45bf3a89be0
@@ -82,7 +82,7 @@ The set of experiments on Declare Analyzer have the aim of comparing our propose
 %	\caption{KnoBAB vs Declare Analyzer Performance for Different Models.}\label{fig:vsSQL}
 %=======
 %	\includegraphics[width=.65\textwidth]{images/burattin_benchmark.pdf}
-	\caption{KnoBAB vs Declare Analyzer Performance for Different Models. Knobab + CQ indicates the intersection, per trace, of all the satisfaction result representations i.e. returning  the traces that fulfilled all the clauses.}\label{fig:vsSQL}
+	\caption{KnoBAB vs Declare Analyzer Performance for Different Models. Knobab + CQ indicates the intersection, per trace, of all the satisfaction result representations i.e. returning  the traces that fulfilled all the clauses.}\label{fig:vsBuatto}
 %>>>>>>> afbd0a59ff585065401fffc3aefe36a3ae7a9b7f
 \end{figure}
 
