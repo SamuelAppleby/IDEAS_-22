@@ -1,0 +1,257 @@
+\documentclass[11pt]{article}
+\setlength{\rightmargin}{2.5cm}
+\setlength{\leftmargin}{2.5cm}
+\usepackage{setspace}
+\onehalfspacing
+\textwidth 6.5in
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6.2in}
+\usepackage{xcolor}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+
+\usepackage[english]{babel}
+
+%%%% COMMENTS
+%% Comments package -- Giacomo
+%\newcommand*{\REVIEWON}{}%
+\usepackage{pdfcomment}
+\usepackage{environ}
+%{\pdfcomment{\BODY}}
+\usepackage{easyReview}
+\makeatother
+
+%\newcommand{\REVIEWON}{}
+\ifdefined\REVIEWON
+\newcommand{\RevAdd}[1]{\add{#1}}
+\newcommand{\RevRepl}[2]{\replace{#1}{#2}}
+\newcommand{\RevDel}[1]{\remove{#1}}
+\newcommand{\PopUpComment}[2]{\pdfcomment[author={#1}]{#2}}
+\else
+\newcommand{\RevAdd}[1]{#1}
+\newcommand{\RevRepl}[2]{{#2}}
+\newcommand{\RevDel}[1]{ }
+\newcommand{\PopUpComment}[2]{ }
+\fi
+
+\usepackage{newclude}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{adjustbox}
+
+%% Swiggly notes -- Giacomo
+\usepackage{xparse}
+\usepackage{marginnote}
+\usepackage{soul}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage{bigdelim}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+\newlength\LineWidth
+\newlength\Amplitude
+\newlength\SegLength
+\setlength\LineWidth{0.4pt}
+\setlength\Amplitude{1pt}
+\setlength\SegLength{5pt}
+\definecolor{HLcolor}{RGB}{240,0,0}
+\newcommand\tikzmark[1]{%
+	\tikz[overlay,remember picture] \node (#1) {};}
+\makeatletter
+\newcommand{\highlight@DoHighlight}{
+	\draw[HLcolor,line width=\LineWidth,decorate,decoration={zigzag,amplitude=\Amplitude,segment length=\SegLength}]  ($(begin highlight)+(0,-2pt)$) -- ($(end highlight)+(0,-2pt)$) ;
+}
+\newcommand{\highlight@BeginHighlight}{
+	\coordinate (begin highlight) at (0,0) ;
+}
+\newcommand{\highlight@EndHighlight}{
+	\coordinate (end highlight) at (0,0) ;
+}
+\newdimen\highlight@previous
+\newdimen\highlight@current
+\DeclareRobustCommand*\highlight[1][]{%
+	\SOUL@setup
+	%
+	\def\SOUL@preamble{%
+		\begin{tikzpicture}[overlay, remember picture]
+			\highlight@BeginHighlight
+			\highlight@EndHighlight
+		\end{tikzpicture}%
+	}%
+	%
+	\def\SOUL@postamble{%
+		\begin{tikzpicture}[overlay, remember picture]
+			\highlight@EndHighlight
+			\highlight@DoHighlight
+		\end{tikzpicture}%
+	}%
+	%
+	\def\SOUL@everyhyphen{%
+		\discretionary{%
+			\SOUL@setkern\SOUL@hyphkern
+			\SOUL@sethyphenchar
+			\tikz[overlay, remember picture] \highlight@EndHighlight ;%
+		}{%
+		}{%
+			\SOUL@setkern\SOUL@charkern
+		}%
+	}%
+	%
+	\def\SOUL@everyexhyphen##1{%
+		\SOUL@setkern\SOUL@hyphkern
+		\hbox{##1}%
+		\discretionary{%
+			\tikz[overlay, remember picture] \highlight@EndHighlight ;%
+		}{%
+		}{%
+			\SOUL@setkern\SOUL@charkern
+		}%Richard
+	}%
+	%
+	\def\SOUL@everysyllable{%
+		\begin{tikzpicture}[overlay, remember picture]
+			\path let \p0 = (begin highlight), \p1 = (0,0) in \pgfextra
+			\global\highlight@previous=\y0
+			\global\highlight@current =\y1
+			\endpgfextra (0,0) ;
+			\ifdim\highlight@current < \highlight@previous
+			\highlight@DoHighlight
+			\highlight@BeginHighlight
+			\fi
+		\end{tikzpicture}%
+		\the\SOUL@syllable
+		\tikz[overlay, remember picture] \highlight@EndHighlight ;%
+	}%
+	\SOUL@
+}
+\makeatother
+\DeclareDocumentCommand\MarkText{O{red}O{1pt}O{5pt}m}{%
+	\colorlet{HLcolor}{#1}
+	\setlength\Amplitude{#2}%
+	\setlength\SegLength{#3}%
+	\tikzmark{endquote}\tikzmark{beginquote}\highlight{#4}%
+}
+\usepackage[framemethod=tikz]{mdframed}
+%%% Pseudocodes
+\usepackage{inconsolata}
+\usepackage{floatrow}
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{tabularx}% added for table design
+\usepackage{lipsum}% for dummy text
+\usepackage[noend]{algpseudocode}
+%% Multiline
+\newcommand\CONDITION[2]%
+{\begin{tabular}[t]{@{}l@{}l@{}}
+		#1&#2
+	\end{tabular}%
+}
+\algdef{SE}[WHILE]{While}{EndWhile}[1]%
+{\algorithmicwhile\ \CONDITION{#1}{\ \algorithmicdo}}%
+{\algorithmicend\ \algorithmicwhile}
+\algdef{SE}[FOR]{For}{EndFor}[1]%
+{\algorithmicfor\ \CONDITION{#1}{\ \algorithmicdo}}%
+{\algorithmicend\ \algorithmicfor}
+\algdef{S}[FOR]{ForAll}[1]%
+{\algorithmicforall\ \CONDITION{#1}{\ \algorithmicdo}}
+\algdef{SE}[REPEAT]{Repeat}{Until}{\algorithmicrepeat}[1]%
+{\algorithmicuntil\ \CONDITION{#1}{}}
+\algdef{SE}[IF]{If}{EndIf}[1]%
+{\algorithmicif\ \CONDITION{#1}{\ \algorithmicthen}}%
+{\algorithmicend\ \algorithmicif}%
+\algdef{C}[IF]{IF}{ElsIf}[1]%
+{\algorithmicelse\ \algorithmicif\ \CONDITION{#1}{\ \algorithmicthen}}
+%% End Multiline
+\usepackage{algorithm,algorithmicx}
+\makeatletter
+\algrenewcommand\ALG@beginalgorithmic{\ttfamily}
+\makeatother
+\usepackage{adjustbox} %% Fitting to pageRichard
+\usepackage{amsmath,stmaryrd}
+%% mathematics
+\usepackage{braket} %% Set, tuple...
+
+\usepackage{pifont}
+
+\include{macros}
+
+
+\begin{document}
+%\setlength{\rightmargin}{2.5cm}
+%\setlength{\leftmargin}{2.5cm}\texttt{\color{red}[TODO: link to the infographic picture, continue the use case example. Potentially expand the description if something is not self-evident from the pictures]}
+%\setleftmargin{2.5cm}	
+%\setrightmargin{2.5cm}	
+\title{Running Temporal Logical Queries on Knowledge Bases}
+\author{\vspace{-10ex}}
+%\author{[Authors Removed For Double Blind Review]}
+\date{\vspace{-10ex}}
+%\date{}  % Toggle commenting to test
+
+\maketitle
+~\\
+\begin{abstract}
+State of the art for on model checking exploit computationally intensive solutions, bottlenecked by either repeated data access or suboptimal algorithmic implementations. Our solution outperforms the previous solutions, while proposing novel temporal logic operators for accessing relational tables.	
+%State of the art approaches on model checking for declarative temporal models, involving temporal correlation between events happening at different times, exploit computationally intensive solutions. While ad-hoc non relational-database related solutions perform multiple scans of the input data, as the model checking is performed at each single temporal constraint within the model, relational databases are bottlenecked by accessing the same events multiple times and by costly aggregation operations. In order to efficiently exploit the relational model, we propose KnoBAB, a relational database engine composed of novel specialised operators, thus extending both formal definitions of such temporal models and providing a straightforward implementation on top of the relational model. As our trace logs are data-aware, we make also such operators support event correlations as $\Theta$-join operations for the first time. Experiment shows almost linear time complexity with the number of temporal clauses, thus overcoming quadratic costs from relational databases and inefficient non-database solutions not exploiting efficient query plans. The resulting system can be then exploited in real-time scenarios, such as video games and cyber-security systems.
+
+%the context or background information for your research; the general topic under study; the specific topic of your research
+%
+%the central questions or statement of the problem your research addresses
+%
+%what’s already known about this question, what previous research has done or shown
+%
+%the main reason(s), the exigency, the rationale, the goals for your research—Why is it important to address these questions? Are you, for example, examining a new topic? Why is that topic worth examining? 
+%
+%Are you filling a gap in previous research? Applying new methods to take a fresh look at existing ideas or data? Resolving a dispute within the literature in your field? . . .
+%
+%your research and/or analytical methods
+%
+%your main findings, results, or arguments
+%
+%the significance or implications of your findings or arguments.
+%
+%	
+%\color{red}
+%State of the art approaches on model checking for declarative temporal models involving correlation between two events happening at different times within a sequence of events exploit straightforward and computationally intensive solutions, where data needs to be scanned multiple times per temporal model (query). By exploiting adequate knowledge base representation as well as ad hoc query plans, data loading and indexing is necessary only once, thus enhancing the complexity and allowing queries to be run multiple times after loading the traces only once. In fact, no solution exploiting efficient relational databases, querying multiple declarative constraints, and expressing temporal correlation conditions as relational join operations is known. The resulting system can be then exploited in real-time scenarios, such as video games and cyber-security systems. For efficiently exploiting such a KB, this paper proposes for the first time, to the best of our knowledge, a specialised set of operators determining both the semantics of the temporal model and the operators for the query plan. As our trace logs are data-aware, we make also such operators support join conditions for the first time. Experiment shows almost linear time complexity with the number of temporal clauses, thus overcoming quadratic costs from relational databases and inefficient non-database solutions not exploiting efficient query plans.
+\end{abstract}
+~\\
+
+{\bf Keywords}: Logical Artificial Intelligence, Knowledge Bases, Query Plan, Temporal Logic
+~\\
+
+% A category with the (minimum) three required fields
+{\bf Topics} Physical Layout, Algorithms
+~\\
+
+
+\include*{sections/10introduction}
+\include*{sections/20related}
+\include*{sections/20a_declare}
+%\include*{sections/21temporallogicoperators}
+\include*{sections/22conformance}
+\include*{sections/30declare_definition}
+\include*{sections/40physical_model}
+\include*{sections/41data_loading}
+\include*{sections/42query_compiler}
+\include*{sections/43storage_manager}
+\include*{sections/44execution_engine}
+\include*{sections/45operator_semantics}
+\include*{sections/50experiments}
+\include*{sections/60conclusions}
+
+
+
+
+\bibliographystyle{abbrv}  
+\bibliography{anon.bib,refs.bib}  
+
+
+\end{document}
+
