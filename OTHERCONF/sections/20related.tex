@@ -13,6 +13,6 @@
 
 (Data) \textit{payloads} are maps  associating attributes (i.e., \textit{keys}) to data values. 
 Given a finite set of activity labels $\textsf{Act}$, an event $\sigma_j^{i}$ is a pair $\Braket{\textsf{a},p}$, where $\textsf{a}\in\textsf{Act}$ is an activity label, and $p$ is a payload, mapping each key to a single value. 
-A \textit{trace} $\sigma^i$ is a temporally-ordered and finite sequence of distinct events $\sigma^i=\sigma_1^i\cdots\sigma_n^i$, modeling a process run. 
+A \textit{trace} $\sigma^i$ is a temporally-ordered and finite sequence of distinct events $\sigma^i=\sigma_1^i\cdots\sigma_n^i$, modelling a process run. 
 All events within the same trace associate the same values to the same trace keys. 
 A log $\mathcal{L}$ is a finite set of traces $\Set{\sigma^1,\dots,\sigma^m}$. We denote  $\Sigma\subseteq\textsf{Act}$ as the set of all the possible activity labels in the log. If traces also contain a payload, then this can be easily mimicked by adding an extra event containing such a payload, \textsf{\_\_trace\_payload}, at the beginning of the trace. This  characterization \cite{bpm21} is compliant with the \textsc{eXtensible Event Stream} (XES) format, which is the \textit{de facto} standard for representing event logs within the Business Process Management community \cite{XES}. 
