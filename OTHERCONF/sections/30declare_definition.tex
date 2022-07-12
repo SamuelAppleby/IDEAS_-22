@@ -37,7 +37,7 @@ The next two lines report the same operators described in \S\ref{sec:DAD} with t
 The remaining operators merge multiple operators together when 
 a specific implementation outperforms
 the execution of the operators separately:
- e.g., $\textsf{AndFuture}(\phi,\phi',\Theta)$ is equivalent to $\textsf{And}(\phi,\textsf{Future}(\phi'),\Theta)$, but preliminary experiments reveal that the former has a more efficient implementation than computing the latter. This choice was inspired by relational algebra, where $\theta$-joins are usually more efficient than performing a join and a selection operation separately.
+ e.g., $\textsf{AndFuture}(\phi,\phi',\Theta)$ is equivalent to\\ $\textsf{And}(\phi,\textsf{Future}(\phi'),\Theta)$, but preliminary experiments reveal that the former has a more efficient implementation than computing the latter. This choice was inspired by relational algebra, where $\theta$-joins are usually more efficient than performing a join and a selection operation separately.
  On the other hand, % Similarly,  we can associate the correlation condition to implication operators after rewriting 
  $\textsf{Implies}(\phi,\phi',\Theta)$ is rewritten as $\textsf{Or}(\textsf{Not}(\phi),\,\textsf
 {And}(\phi,\phi',\Theta),\,\textbf{true})$. As per previous discussion, the left leaf of \textsf{AndFuture}$_\Theta$ in \figurename~\ref{fig:knobab_pipeline} returns all of the referral events with CA 15-3 above the safeguard levels, $\Set{\braket{1,1,\{A(1)\}},\braket{3,1,\{A(1)\}}}$, while the right leaf returns just the follow-up events below such levels, $\Set{\braket{1,3,\{A(3)\}}}$. The operator \textsf{AndFuture}$_\Theta$ will then return only $\Set{\braket{3,1,\{M(1,3)\}}}$, as only the first trace will have a decrease below the safeguard levels from referral to follow-up.
@@ -62,14 +62,14 @@ Each \xLTLf operator is going to both return and/or accept data in the result re
 			\begin{algorithmic}[1]
 				\Statex
 				\Function{Future}{$\phi$}
-				\State {\textbf{Require:\;}sorted($\phi$)}
+				%\State {\textbf{Require:\;}sorted($\phi$)}
 				\ForAll{$\braket{t,e,L}\in\phi$}
 				\textbf{yield} $\braket{t,e,\bigcup\Set{L'|\braket{t,e',L'}\in\phi\texttt{\textbf{\;and\;}}e'\geq e}}$
 				\EndFor
 				\EndFunction\medskip
 				%%
 				\Function{Globally}{$\phi$}
-				\State {\textbf{Require:\;}sorted($\phi$)}
+				%\State {\textbf{Require:\;}sorted($\phi$)}
 				\ForAll{$\braket{t,e,L}\in\phi$}
 				\State $E\gets\Set{e'|\braket{t,e',L'}\in\phi\texttt{\textbf{\;and\;}}e'\geq e}$
 				\If {$|E|=\ell_t-e$} 
@@ -79,14 +79,14 @@ Each \xLTLf operator is going to both return and/or accept data in the result re
 				\EndFunction\medskip
 				%%
 				\Function{Next}{$\phi$}
-				\State {\textbf{Require:\;}sorted($\phi$)}
+				%\State {\textbf{Require:\;}sorted($\phi$)}
 				\ForAll{$\braket{t,e,L}\in\phi$\textbf{\;s.t.} $e>1$}
 				\textbf{yield} $\braket{t,e-1,L}$
 				\EndFor
 				\EndFunction\medskip
 				%%
 				\Function{CommonJoin}{$\phi,\phi',\Theta,{isDisjunctive}$} %\Comment{Sort Merge (Full-Outer-)Join}
-				\State {\textbf{Require:\;}sorted($\phi$)\textbf{\;and\;}sorted($\phi'$)}
+				\State %{\textbf{Require:\;}sorted($\phi$)\textbf{\;and\;}sorted($\phi'$)}
 				\State  $it\gets$\textbf{Iterator}$(\phi), it\gets$\textbf{Iterator}$(\phi')$
 				\While{$it\neq\emptyset$\textbf{\;and\;}$it'\neq\emptyset$}
 				\State $\braket{t,e,L}\gets\texttt{current}(it)$, $\braket{t',e',L'}\gets\texttt{current}(it')$
@@ -119,7 +119,7 @@ Each \xLTLf operator is going to both return and/or accept data in the result re
 				\EndFunction\medskip
 				%%
 				\Function{Until}{$\phi,\phi',\Theta$}
-				\State {\textbf{Require:\;}sorted($\phi$)\textbf{\;and\;}sorted($\phi'$)}
+				%\State %{\textbf{Require:\;}sorted($\phi$)\textbf{\;and\;}sorted($\phi'$)}
 				\ForAll{$t$ \textbf{\;s.t.\;} $\braket{t,i',L'}\in \phi'$}
 				\State $\alpha\gets 1$; $Map\gets\{\}$; $i\gets \min_{\iota}\braket{t,\iota,L}\in \phi'$; $I\gets \max_{\iota}\braket{t,\iota,L}+1$
 				\While{$i< I$}

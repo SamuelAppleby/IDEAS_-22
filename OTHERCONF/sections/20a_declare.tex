@@ -1,4 +1,4 @@
-\begin{table}[!t]
+\begin{table*}[!t]
 	\centering
 \caption{Declare \textsf{templates} illustrated as exemplifying clauses. $A\wedge p$ ($B\wedge q$) represents the \textit{activation} (\textit{target}) condition, $A$ ($B$) denotes the activity label, and $p$ ($q$) is the data payload condition.}\label{tab:dt}
 \resizebox{\textwidth}{!}{\begin{tabular}{c|l|p{9cm}|l}
@@ -29,7 +29,7 @@
 	 & \textsf{NotSuccession($A,p,B,q$)} & The activation requires that no target condition should follow.& $\Globally((A\wedge p)\Rightarrow \neg\Future(B\wedge q))$ \\
 	 \bottomrule
 \end{tabular}}
-\end{table} 
+\end{table*} 
 
 
 \paragraph*{Conformance Checking}\label{sec:DAD} Temporal declarative languages 
@@ -60,7 +60,7 @@ Given a trace $\sigma^i$, the evaluation of a formula $\varphi$ is done in a giv
 \begin{figure}[!t]
 	\centering
 
-\includegraphics[width=.5\linewidth]{images/ActivationTargetExample-old.pdf}
+\includegraphics[width=\linewidth]{images/ActivationTargetExample-old.pdf}
 	%	\begin{subfigure}{.27\columnwidth}
 		%		\resizebox{\textwidth}{!}{\begin{tabular}{c c} 
 				%				\hline

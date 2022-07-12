@@ -10,11 +10,11 @@
  expressed as Finite State Machines \cite{MultiPerspective,AgostinelliBFMM21} %Such a model might be either represented as a set of temporal clauses, determining correlations between events happening at a previous time of the trace (\textit{activation}) and others happening in the immediate future (\textit{target}).
  but, by doing so, each state will represent a possible state configuration the system might find itself in, for which we need to describe all the reasonable actions and data conditions the system might find itself in. This makes graph data-aware model checking as \cite{bpm21} rather inefficient, as the size of these graphs becomes exponential with respect to the original size of the declarative model. As a result, this increases the computational time required for conformance checking. Furthermore, such models are incapable of expressing $\Theta$-correlation conditions on the data payload, thus limiting the models' expressiveness.
  
-\begin{sidewaysfigure}
+\begin{figure*}
 	\centering
 	\includegraphics[width=\textwidth]{images/knobab_pipeline3.pdf}
 	\caption{KnoBAB Architecture for Breast Cancer patients. Each trace \ding{192}-\ding{194} represents one single patient's clinical history, are represented with unique colouring. Please observe that the atomization process does not consider data distribution but rather partitions the data space as described by the data activation and target conditions. In the query plan, green arrows remark access  to shared sub-queries as in \cite{BellatrecheKB21}, and thick red ellipses remark which operators are untimed. } \label{fig:knobab_pipeline}
-\end{sidewaysfigure}
+\end{figure*}
 Conformance checking with declarative models
 %{Despite the two approaches are equivalent} , {the latter is rather inefficient for conformance checking traces with data payloads} \cite{bpm21}. %Declarative temporal rules are not limited to the mere presence of specific events within the trace, but also determine \RevRepl{how such clauses might occur}{temporal occurrence patterns}. 
 {is a well-studied technology at the core} of AI's temporal decision making. \textit{Firstly}, conformance checking is adopted when mining a model from logs either containing only positive (or negative) traces \cite{ROVANI20159236}, or on logs containing both, but where positive traces can be discriminated from the negative ones via behavioural or data conditions, thus allowing to generate both a positive and a negative model  \cite{mining}. In a hospital scenario, a positive model might both describe a medical protocol and the desired patients' health condition at each step. %these might identify the desired health conditions at the end of a medical protocol or simply state the viable solutions.
