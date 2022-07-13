@@ -34,17 +34,18 @@ Our benchmarks exploited a Razer Blade Pro on Ubuntu 20.04: Intel Core i7-10875H
 				$q_{9}:= \DeclareClause{Response}{W\_Valideren aanvraag}{\texttt{AMOUNT\_REQ} = 5 \cdot 10^3}{O\_CANCELLED}{\textbf{true}} $ \\&
 				$q_{10}:= q_{9} \textrm{ where } \texttt{W\_Valideren aanvraag.org:resource}=\texttt{O\_CANCELLED.org:resource}$ \\
 				\toprule
-				\multirow{5}{*}{$M_3=M_2+$}\rdelim\{{5}{3mm} & $q_{11}:= \DeclareClause{Response}{O\_SELECTED}{\textbf{true}}{O\_CANCELLED}{\textbf{true}}$ \\&
+				\multirow{6}{*}{$M_3=M_2+$}\rdelim\{{6}{3mm} & $q_{11}:= \DeclareClause{Response}{O\_SELECTED}{\textbf{true}}{O\_CANCELLED}{\textbf{true}}$ \\&
 				$q_{12}:= q_{11} \textrm{ where } \texttt{O\_SELECTED.org:resource}=\texttt{O\_CANCELLED.org:resource}$ \\&
 				$q_{13}:= \DeclareClause{Response}{O\_SELECTED}{\texttt{AMOUNT\_REQ} < 8 \cdot 10^3}{O\_CANCELLED}{\textbf{true}}$ \\&
 				$q_{14}:= q_{13} \textrm{ where } \texttt{O\_SELECTED.org:resource}=\texttt{O\_CANCELLED.org:resource}$ \\&
-				$q_{15}:= \DeclareClause{Response}{O\_SELECTED}{\texttt{AMOUNT\_REQ} > 10^3}{O\_CANCELLED}{\textbf{true}}$ \\
+				$q_{15}:= \DeclareClause{Response}{O\_SELECTED}{\texttt{AMOUNT\_REQ} > 10^3}{O\_CANCELLED}{\textbf{true}}$ \\&
+				\qquad\; $\textrm{ where } \texttt{O\_SELECTED.org:resource}\neq\texttt{O\_CANCELLED.org:resource}$\\
 				\toprule
 				\multirow{5}{*}{$M_4=M_3+$} \rdelim\{{5}{3mm}& $q_{16}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\textbf{true}}{A\_DECLINED}{\textbf{true}}$ \\&
 				$q_{17}:= q_{16} \textrm{ where } \texttt{A\_PARTLYSUBMITTED.org:resource}=\texttt{A\_DECLINED.org:resource}$ \\&
 				$q_{18}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\texttt{AMOUNT\_REQ} > 2 \cdot 10^4}{A\_DECLINED}{\textbf{true}}$ \\&
 				$q_{19}:= \DeclareClause{Response}{A\_PARTLYSUBMITTED}{\texttt{AMOUNT\_REQ} > 2 \cdot 10^4}{A\_CANCELLED}{\textbf{true}}$ \\&
-				$q_{20}:= q_{18} \textrm{ where } \texttt{A\_SUBMITTED.org:resource}=\texttt{A\_ACCEPTED.org:resource}$ \\
+				$q_{20}:= q_{18} \textrm{ where } \texttt{A\_PARTLYSUBMITTED.org:resource}=\texttt{A\_DECLINED.org:resource}$ \\
 		\end{tabular}}
 		\captionof{table}{Declare Models with their Respective Clauses}\label{table:burattin_model}
 	\end{minipage}
