@@ -4,8 +4,28 @@
 	\caption{KnoBAB vs SQLMiner Performance for 25 clauses with frequent activity labels with Support and Trace Information. OOM indicates Out of Secondary Memory for logs containing $10^3$ traces (followed by the time taken for an exception to occur).}\label{fig:vsSQL}
 \end{figure}
 \section{Experimental Analysis}\label{sec:exp}
-Our benchmarks exploited a Razer Blade Pro on Ubuntu 20.04: Intel Core i7-10875H CPU @ 2.30GHz - 5.10 GHz, 16GB DDR4 2933MHz RAM, 180GB free disk space.
+Our benchmarks exploited a Razer Blade Pro on Ubuntu 20.04: Intel Core i7-10875H CPU @ 2.30GHz - 5.10 GHz, 16GB DDR4 2933MHz RAM, 180GB free disk space. Our datasets (\tablename~\ref{table:dataset}) include 2 real life event logs: BPIC 2011 (Dutch academic hospital log) and BPIC 2012 (Dutch loan company) from the Business Processing Intelligence Challenge.
 
+\begin{table}
+	\resizebox{.5\textwidth}{!}{
+			\begin{tabular}{ l l r r r }
+			\toprule
+			Benchmark & Datasets & Traces & Events & Unique Activities\\ [0.5ex] 
+			\midrule
+			\multirow{4}{*}{SQL Miner} &
+			bpic\_2011\_original & 1143 & 150 291 & 624 \\ &
+			bpic\_2011\_10 & 10 & 2613 & 26 \\ &
+			bpic\_2011\_100 & 100 & 12 195 & 26 \\ &
+			bpic\_2011\_1000 & 1000 & 133 935 & 28 \\ 
+			\midrule
+			\multirow{1}{*}{Declare Analyzer} &
+			bpic\_2012\_original & 13087 & 262 200 & 21 \\
+			\bottomrule
+		\end{tabular}
+	}
+\caption{Range of datasets used for benchmarking\tablefootnote{\url{https://dx.doi.org/10.17605/OSF.IO/XWD3V}}.}
+\label{table:dataset}
+\end{table}
 
 \begin{figure*}[!h]
 	\begin{minipage}[t]{.3\linewidth}
@@ -53,7 +73,7 @@ Our benchmarks exploited a Razer Blade Pro on Ubuntu 20.04: Intel Core i7-10875H
 \subsection{SQLMiner}\label{ssec:sqlmin}
 These experiments want to test our working hypotheses for the possibility of engineering a tailored relational database architecture that can outperform process mining through conformance checking running on traditional relational databases. In the latter, no \LTLf operators are exploited but a table similar to \texttt{ActivityTable} is exploited. % are provided and non-customary tabular representation is exploited. 
 Given that the SQL provided in \cite{Schonig15,SchonigRCJM16} might only return the \textsc{Support} associated with each candidate Declare clause (\texttt{SQLMiner+Support}), we provided the least possible changes to also associate each candidate clause with the set of all the traces satisfying it. This was achieved by both extending the activation condition expressed in SQL and using \texttt{array\_aggr} included in \textbf{PostgreSQL 14.2} to list such traces (\texttt{SQLMiner+TraceInfo}). For comparing the same settings in KnoBAB, we run both Max-SAT and \textsc{Support} queries with the difference that, in our case, both of these implementations will always return, per intermediate result specification, the trace information satisfying each possible model clause.
-For our experiments, we exploited the same hospital log dataset from \cite{SchonigRCJM16}. To test the scalability of the solutions, we recorded the query's runtime with increasing log size: we randomly sampled the log with three sub-logs containing 10, 100 and 1000 traces, while guaranteeing that each sub-log is always a subset of the greater ones. For each sub-log, we generated 8 distinct models as benchmarked in \cite{Schonig15}. Each model consists of 25 clauses instantiating the same Declare template (\textit{elected template}) with different activation and target conditions. Those did not consider payload conditions and were only considering the most frequent activity labels appearing in the sub-log. Models of greater size than this caused an exponential increase in required secondary memory for SQLMiner (on the order of TB), justifying our approach for a sampled model. In their approach, each model was queried by running the SQL query corresponding to the \textit{elected template}, and the specific activation and target conditions from the model's clauses were distinct rows in the \textsf{Action} table.
+For our experiments, we exploited \remove{the same hospital log} \add{BPIC 2011} dataset from \cite{SchonigRCJM16}. To test the scalability of the solutions, we recorded the query's runtime with increasing log size: we randomly sampled the log with three sub-logs containing 10, 100 and 1000 traces, while guaranteeing that each sub-log is always a subset of the greater ones. For each sub-log, we generated 8 distinct models as benchmarked in \cite{Schonig15}. Each model consists of 25 clauses instantiating the same Declare template (\textit{elected template}) with different activation and target conditions. Those did not consider payload conditions and were only considering the most frequent activity labels appearing in the sub-log. Models of greater size than this caused an exponential increase in required secondary memory for SQLMiner (on the order of TB), justifying our approach for a sampled model. In their approach, each model was queried by running the SQL query corresponding to the \textit{elected template}, and the specific activation and target conditions from the model's clauses were distinct rows in the \textsf{Action} table.
 
 
 
@@ -67,7 +87,7 @@ The set of experiments on Declare Analyzer have the aim of comparing our propose
 %=======
 %>>>>>>> 33357ef815c5a234b684fdafdceed45bf3a89be0
 %In order to do so, 
-We exploited the BPI 2012 Challenge dataset, also used in \cite{BurattinMS16}, and we slightly edited the queries in the same paper as illustrated in \tablename~\ref{table:burattin_model}, where all the models $M_i$ and $M_j$ with $i<j$ are always the former a subset of the latter, while $M_{i+1}$ provides a 5-fold increase from $M_i$. For Declare Analyzer, we chose to load the dataset via MapDB\footnote{\url{https://mapdb.org/}}, thus aligning the authors' hash map representations of the dataset with a representation similar to the one for relational databases. 
+We exploited the \remove{BPI 2012 Challenge dataset} \add{BPIC 2012} dataset, defined in \tablename~\ref{table:dataset}, also used in \cite{BurattinMS16}, and we slightly edited the queries in the same paper as illustrated in \tablename~\ref{table:burattin_model}, where all the models $M_i$ and $M_j$ with $i<j$ are always the former a subset of the latter, while $M_{i+1}$ provides a 5-fold increase from $M_i$. For Declare Analyzer, we chose to load the dataset via MapDB\footnote{\url{https://mapdb.org/}}, thus aligning the authors' hash map representations of the dataset with a representation similar to the one for relational databases. 
 
 
 Our experiments indicate that, overall, we are 2-3 times orders of magnitude more performant than DeclareAnalyzer. The conjunctive query denoted as \texttt{KnoBAB+CQ} demonstrates greater performance that \texttt{KnoBAB+Support}, as the calculations required for the support values per clause are more costly for smaller models. Though this is only within the order of the milliseconds. For an increase in model size, Declare Analyzer has a much greater time increase than KnoBAB (the best case for Declare Analyzer is over an order of magnitude greater than that of KnoBAB). %Regarding scalability, the former exhibits better performance than KnoBAB, where the complexity increase is less than that of KnoBAB. 
