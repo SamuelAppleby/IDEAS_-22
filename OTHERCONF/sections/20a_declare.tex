@@ -6,8 +6,8 @@
 	Type & Exemplifying clause ($c_l$) & Natural Language Specification for Traces & \LTLf Semantics ($\llbracket c_l \rrbracket$)\\
 	\midrule
 	 \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{\textit{Simple}}}} & \textsf{Init($A,p$)} & The trace should start with an activation & $A\wedge p$\\
-	 & \textsf{Exists($A,p,n$)} & Activations should occur at least $n$ times & $\Future(A\wedge p \wedge \Next (\textsf{Exists} (A,p,n-1)))$\\
-	 & \textsf{Absence($A,p,n+1$)}  & Activations should occur at most $n$ times & $\neg \textsf{Exists}$($A,p,n+1$)\\
+	 & \textsf{Exists($A,p,n$)} & Activations should occur at least $n$ times & $\Future(A\wedge p \wedge \Next (\llbracket\textsf{Exists} (A,p,n-1)\rrbracket))$\\
+	 & \textsf{Absence($A,p,n+1$)}  & Activations should occur at most $n$ times & $\neg \llbracket\textsf{Exists}$($A,p,n+1$)$\rrbracket$\\
 	 & \textsf{Precedence($A,p,B,q$)}  & Events preceding the activations should not satisfy the target & $\WeakUntil{\neg(B\wedge p)}{(A\wedge p)}$\\
 	 \midrule
 	 \parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{\textit{(Mutual) Correlation}}}} 	 & \textsf{ChainPrecedence($A,p,B,q$) }  & The activation is immediately preceded by the target. & $\Globally(\Next(A\wedge p)\Rightarrow (B\wedge q))$\\
@@ -15,14 +15,14 @@
 	 & \textsf{Response($A,p,B,q$) } & The activation is either followed by or simultaneous to  the target. & $\Globally((A\wedge p)\Rightarrow\Future(B\wedge q))$ \\
 	 & \textsf{ChainResponse($A,p,B,q$) }  & The activation is immediately followed by the target. & $\Globally((A\wedge p)\Rightarrow \Next(B\wedge q))$\\
 	 & \textsf{RespExistence($A,p,B,q$) }  & The activation requires the existence of the target.& $\Future(A\wedge p)\Rightarrow\Future(B\wedge q)$ \\
-	 & \textsf{ExlChoice($A,p,B,q$) } & Either the activation \texttt{xor} the target happen. & $(\Future(A\wedge p)\vee \Future(B\wedge q))\wedge \DeclareClause{NotCoExistence}{A}{p}{B}{q}$\\ 
-	 & \textsf{CoExistence($A,p,B,q$) }  & \textsf{RespExistence}, and vice versa. & $ \DeclareClause{RespExistence}{A}{p}{B}{q}\wedge \DeclareClause{RespExistence}{B}{q}{A}{p}$\\
-	 & \textsf{Succession($A,p,B,q$) }  & The target should only follow the activation. & $\DeclareClause{Precedence}{A}{p}{B}{q}\wedge \DeclareClause{Response}{A}{p}{B}{q}$\\
+	 & \textsf{ExlChoice($A,p,B,q$) } & Either the activation \texttt{xor} the target happen. & $(\Future(A\wedge p)\vee \Future(B\wedge q))\wedge \llbracket\DeclareClause{NotCoExistence}{A}{p}{B}{q}\rrbracket$\\ 
+	 & \textsf{CoExistence($A,p,B,q$) }  & \textsf{RespExistence}, and vice versa. & $ \llbracket\DeclareClause{RespExistence}{A}{p}{B}{q}\rrbracket\wedge \llbracket\DeclareClause{RespExistence}{B}{q}{A}{p}\rrbracket$\\
+	 & \textsf{Succession($A,p,B,q$) }  & The target should only follow the activation. & $\llbracket\DeclareClause{Precedence}{A}{p}{B}{q}\rrbracket\wedge \llbracket\DeclareClause{Response}{A}{p}{B}{q}\rrbracket$\\
 
 	 & \textsf{ChainSuccession($A,p,B,q$) }  & Activation immediately follows the target, and the target immediately preceeds the activation. & $\Globally((A\wedge p)\Leftrightarrow\Next(B\wedge q))$\\
 	 & \textsf{AltResponse($A,p,B,q$) }  & If an activation occurs, no other activations must happen until the target occurs.  & $\Globally((A\wedge p)\Rightarrow(\DUntil{\neg(A\wedge p)}{(B\wedge q)}))$\\
 	 & \textsf{AltPrecedence($A,p,B,q$) }  & Every activation must be preceded by an target, without any other
-	 activation in between &   $\DeclareClause{Precedence}{A}{p}{B}{q}\wedge \Globally((A\wedge p)\Rightarrow \Next(\WeakUntil{\neg(A\wedge p)}{(B\wedge q)})$\\
+	 activation in between &   $\llbracket\DeclareClause{Precedence}{A}{p}{B}{q}\rrbracket\wedge \Globally((A\wedge p)\Rightarrow \Next(\WeakUntil{\neg(A\wedge p)}{(B\wedge q)})$\\
 	 \midrule
 	 
 	 \parbox[t]{2mm}{\multirow{2}{*}{\rotatebox[origin=c]{90}{\textit{Not.}}}} & \textsf{NotCoExistence($A,p,B,q$) } & The activation \texttt{nand} the target happen.&  $\neg(\Future(A\wedge p)\wedge\Future(B\wedge q))$\\
