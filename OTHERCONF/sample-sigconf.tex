@@ -36,8 +36,9 @@
 %%
 %% The first command in your LaTeX source must be the \documentclass command.
 \documentclass[sigconf]{acmart}
-
-
+\let\comment\undefined		% Undefine amsmath comment, macro confict otherwise
+\usepackage{easyReview}
+\usepackage{savesym}
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{multirow}
@@ -57,6 +58,7 @@
 
 \usepackage{tabularx}% added for table design
 \usepackage[noend]{algpseudocode}
+\usepackage{tablefootnote}
 %% Multiline
 \newcommand\CONDITION[2]%
 {\begin{tabular}[t]{@{}l@{}l@{}}
@@ -206,34 +208,52 @@ State of the art for model checking exploit computationally intensive solutions,
 %% Please copy and paste the code instead of the example below.
 %%
 \begin{CCSXML}
-<ccs2012>
- <concept>
-  <concept_id>10010520.10010553.10010562</concept_id>
-  <concept_desc>Computer systems organization~Embedded systems</concept_desc>
-  <concept_significance>500</concept_significance>
- </concept>
- <concept>
-  <concept_id>10010520.10010575.10010755</concept_id>
-  <concept_desc>Computer systems organization~Redundancy</concept_desc>
-  <concept_significance>300</concept_significance>
- </concept>
- <concept>
-  <concept_id>10010520.10010553.10010554</concept_id>
-  <concept_desc>Computer systems organization~Robotics</concept_desc>
-  <concept_significance>100</concept_significance>
- </concept>
- <concept>
-  <concept_id>10003033.10003083.10003095</concept_id>
-  <concept_desc>Networks~Network reliability</concept_desc>
-  <concept_significance>100</concept_significance>
- </concept>
-</ccs2012>
+	<ccs2012>
+	<concept>
+	<concept_id>10002951.10003227.10003351.10003443</concept_id>
+	<concept_desc>Information systems~Association rules</concept_desc>
+	<concept_significance>500</concept_significance>
+	</concept>
+	<concept>
+	<concept_id>10002951.10003227.10003351</concept_id>
+	<concept_desc>Information systems~Data mining</concept_desc>
+	<concept_significance>500</concept_significance>
+	</concept>
+	<concept>
+	<concept_id>10002951.10002952.10002971.10003450.10010828</concept_id>
+	<concept_desc>Information systems~Data scans</concept_desc>
+	<concept_significance>300</concept_significance>
+	</concept>
+	<concept>
+	<concept_id>10002951.10002952.10002971.10003450</concept_id>
+	<concept_desc>Information systems~Data access methods</concept_desc>
+	<concept_significance>300</concept_significance>
+	</concept>
+	<concept>
+	<concept_id>10002951.10002952.10003190.10003192.10003210</concept_id>
+	<concept_desc>Information systems~Query optimization</concept_desc>
+	<concept_significance>500</concept_significance>
+	</concept>
+	<concept>
+	<concept_id>10002951.10002952.10003190.10003192</concept_id>
+	<concept_desc>Information systems~Database query processing</concept_desc>
+	<concept_significance>500</concept_significance>
+	</concept>
+	<concept>
+	<concept_id>10010147.10010178.10010187.10010193</concept_id>
+	<concept_desc>Computing methodologies~Temporal reasoning</concept_desc>
+	<concept_significance>300</concept_significance>
+	</concept>
+	</ccs2012>
 \end{CCSXML}
 
-\ccsdesc[500]{Computer systems organization~Embedded systems}
-\ccsdesc[300]{Computer systems organization~Redundancy}
-\ccsdesc{Computer systems organization~Robotics}
-\ccsdesc[100]{Networks~Network reliability}
+\ccsdesc[500]{Information systems~Association rules}
+\ccsdesc[500]{Information systems~Data mining}
+\ccsdesc[300]{Information systems~Data scans}
+\ccsdesc[300]{Information systems~Data access methods}
+\ccsdesc[500]{Information systems~Query optimization}
+\ccsdesc[500]{Information systems~Database query processing}
+\ccsdesc[300]{Computing methodologies~Temporal reasoning}
 
 %%
 %% Keywords. The author(s) should pick words that accurately describe
