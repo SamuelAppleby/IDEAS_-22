@@ -15,11 +15,11 @@ In addition, the authors
 scan all of the traces completely for each Declare clause, while our proposed solution minimizes the data access by only accessing the data relevant for running the model-checking query. 
 As their solution does not exploit multiple queries running processes, sub-queries or entire clauses appearing multiple times in the model might be recomputed multiple times, thus tampering with the overall running time.
 As per their implementation of the \LTLf operators, authors do not exploit efficient relational algebra operators when possible, as full-outer-theta-joins (or theta-joins) for unions (or conjunctions) with correlation conditions.
-
-Last, each clause is completely hardcoded and, as they do not support novel templates via the definition of novel LTLf formulae, as we instead do. The addition of further Declare clauses would require an entirely new implementation. KnoBAB, on the other hand, supports the definition of potential new Declare templates via configuration files loaded at warm-up, %We propose a more generalised solution, where each clause is composed of a combination of unique operators, allowing for any new clause to be included on the fly.
+%
+Last, each clause is completely hardcoded and, as they do not support novel templates via the definition of novel \LTLf formulae, as we instead do. The addition of further Declare clauses would require an entirely new implementation. KnoBAB, on the other hand, supports the definition of potential new Declare templates via configuration files loaded at warm-up, %We propose a more generalised solution, where each clause is composed of a combination of unique operators, allowing for any new clause to be included on the fly.
 thus enabling a more general result that goes beyond the Declare language and that can be applied to any temporal specification exploiting \LTLf.
 
-
+A more recent approach \cite{abs-2112-04623} attempted at defining specific data structures for performing declarative queries in sublinear-time. Still, this approach has the major shortcoming of pre-computing the possible \textsf{Precedence} or \textsf{Response} queries in a specific data structure, thus precomputing the queries in advance at loading time. Furthermore, this approach does not scale up for other possible declarative patterns, as this might require to extend the data structures with additional data structures. On the other hand, our proposed approach is query independent and potentially supports all of the possible queries that might be expressed in \xLTLf. Furthermore, this approach supports logs with neither trace nor event payload, thus preventing from easily extending such an approach with activation, target, and correlation conditions involving data predicates.
 
 \paragraph*{Process Mining through Conformance Checking}
 Some approaches utilise conformance checking as a mechanism to mine declarative {models}  from an event log: a scoring function tests % by testing 
@@ -32,7 +32,7 @@ Each event log, as well as each activation and target activity label for generat
 %To achieve this, the event log is {first} loaded into the database as table. {Then, f}or every activation and target combination {of the declarative template, the authors store the candidate activation and target conditions to be tested in another relational table}. {For scoring the validity of each candidate clause}, the authors also calculate 
 \textsc{Support} and \textsc{Confidence} scoring functions to determine the precision and reliability of the calculation. Records which do not pass pre-determined \textsc{Support} and \textsc{Confidence} thresholds are filtered out from the data. While SQL also supports data constraints, this solution considers Declare clauses with neither activation, nor target, %, nor correlation conditions}.
 %with payload conditions, as well as 
-nor correlation ones with payload predicates.
+nor correlation ones with payload predicates. This problem is also shared with  more recent approaches where, despite SQL syntax is extended, no evidence of data predicates is given \cite{Polyvyanyy2022}. 
 
 {Despite the authors} exploit %providing additional 
 {data} perspectives in `Resource Assignment Constraints' clauses, distinct from the Declare ones, %these additions were only considered  {as 
