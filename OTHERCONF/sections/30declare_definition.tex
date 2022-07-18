@@ -28,26 +28,6 @@ We now propose the extended \LTLf operators (\xLTLf) directly exploited by our p
      &\gsep \textsf{AndGlobally}(\phi,\phi',\Theta)\gsep \textsf{AndFuture}(\phi,\phi',\Theta)\gsep \textsf{AndNextGlobally}(\phi,\phi',\Theta)\\
 \end{split}\]
 
-Operators in the first line filter traces' events and represent these into the previously-described result representation. 
-\textsf{Init} (\textsf{End}) returns the events at the beginning (end) of each trace satisfying the condition $A\wedge p$. Similarly to \cite{BurattinMS16}, each of these operators might be expressed as either an untimed or as a timed specification. Any operator will be considered timed by default when appearing inside a timed operator, like \textsf{Next}, \textsf{Globally}, \textsf{Future}, \textsf{Until}, and any other composed operator from the last line. E.g., In \figurename~\ref{fig:knobab_pipeline}, \textsf{Exists}$(1,\mathcal{P}_3)$ is a shorthand for \textsf{Exists}$(1,\textrm{FollowUp},-\infty<\textup{CA-15.3}<23.5)$, as each atom always associates an activity label to a payload condition. The operator associated to \textsf{Absence}$(1,\mathcal{P}_3)$ is untimed, while the \textsf{Exists}$(1,\mathcal{P}_3)$ descendant of \textsf{Globally} is timed.  While the timed definition returns a tuple $\braket{i,j,L}$ for each possible event $\sigma^i_j$ within the trace $\sigma^i$ where the formula holds, the untimed specification only checks whether the formula holds at the beginning of the trace. E.g., untimed \textsf{Exists} (\textsf{Absence}) returns the first event trace if at least $n$ (at most $n-1$) events satisfy $A\wedge p$, while the timed version returns the events satisfying (not satisfying) $A\wedge p$ (always $n=1$). All of these operators might be optionally marked as returning either an activation ($A$) or a target ($T$) condition, so that each  $\braket{i,j,L}$ triplet has $L=\{A(j)\}$ or $L=\{T(j)\}$; when no mark is specified, $L$ is empty. To wrap up the previous example, the timed  \textsf{Exists}$(1,\mathcal{P}_3)$ will list the events where $\mathcal{P}_3$ happened, $\Set{\braket{1,3,\{A(3)\}}}$, while the untimed version will just list the traces where such event happened and collect the event of interests in $L$, $\Set{\braket{1,1,\{3\}}}$.
-
-The next two lines report the same operators described in \S\ref{sec:DAD} with the addition of the explicit correlation conditions over activation and target conditions for each binary operator. Algorithm~\ref{algo:xltlfAlgo} provides  implementations of the timed versions of such operators, due to lack of space untimed versions are not provided, yet available in our codebase: please observe that $\textsf{Next}(\phi)$ keeps unaltered the activation and target conditions from $\phi$ and just returns the events where $\phi$ happens as a subsequent step. Any binary operator supports $\Theta$ conditions:  \textsf{And} (and \textsf{Or}) can be expressed as a (full-outer-)$\Theta$-join algorithm over the activation and target conditions stored in $L$ associated with the same event. If at least one activation condition matches one target condition from the same event, those are expressed as a marked correlation condition $M(i,j)$ which is then returned by the join. Regarding the same \textsf{Choice} clause from \figurename~\ref{fig:knobab_pipeline}, the correlation condition $\Theta$ associated to \textsf{Or} is then computed for each activation/target match, and if the condition is passed, the resulting match is added to $L$. 
-
-
-The remaining operators merge multiple operators together when 
-a specific implementation outperforms
-the execution of the operators separately:
- e.g., $\textsf{AndFuture}(\phi,\phi',\Theta)$ is equivalent to\\ $\textsf{And}(\phi,\textsf{Future}(\phi'),\Theta)$, but preliminary experiments reveal that the former has a more efficient implementation than computing the latter. This choice was inspired by relational algebra, where $\theta$-joins are usually more efficient than performing a join and a selection operation separately.
- On the other hand, % Similarly,  we can associate the correlation condition to implication operators after rewriting 
- $\textsf{Implies}(\phi,\phi',\Theta)$ is rewritten as $\textsf{Or}(\textsf{Not}(\phi),\,\textsf
-{And}(\phi,\phi',\Theta),\,\textbf{true})$. As per previous discussion, the left leaf of \textsf{AndFuture}$_\Theta$ in \figurename~\ref{fig:knobab_pipeline} returns all of the referral events with CA 15-3 above the safeguard levels, $\Set{\braket{1,1,\{A(1)\}},\braket{3,1,\{A(1)\}}}$, while the right leaf returns just the follow-up events below such levels, $\Set{\braket{1,3,\{A(3)\}}}$. The operator \textsf{AndFuture}$_\Theta$ will then return only $\Set{\braket{3,1,\{M(1,3)\}}}$, as only the first trace will have a decrease below the safeguard levels from referral to follow-up.
-
-
-Each \xLTLf operator is going to both return and/or accept data in the result representation, thus making such operators closed on such format.
-
-
-
-
 
 \begin{algorithm}
 	\caption{\xLTLf pseudocode implementation for the basic timed operators}\label{algo:xltlfAlgo}
@@ -90,14 +70,14 @@ Each \xLTLf operator is going to both return and/or accept data in the result re
 				\State  $it\gets$\textbf{Iterator}$(\phi), it\gets$\textbf{Iterator}$(\phi')$
 				\While{$it\neq\emptyset$\textbf{\;and\;}$it'\neq\emptyset$}
 				\State $\braket{t,e,L}\gets\texttt{current}(it)$, $\braket{t',e',L'}\gets\texttt{current}(it')$
-
+				
 				
 				
 				\If{$t=t'$ \textbf{and} $e=e'$}
 				\State $L''\gets\emptyset$
 				
 				\If{$\Theta\neq\textbf{true}$\;\textbf{and}\;$L\neq\emptyset$\;\textbf{and}\;$L'\neq\emptyset$}
-						\ForAll{$A(m)\in L$\textbf{\;and\;}$T(n)\in L'$\textbf{\;s.t.\;}$\Theta(m,n)$}
+				\ForAll{$A(m)\in L$\textbf{\;and\;}$T(n)\in L'$\textbf{\;s.t.\;}$\Theta(m,n)$}
 				\State $L''\gets L''\cup\Set{M(m,n)}$
 				\EndFor
 				\Else
@@ -134,10 +114,10 @@ Each \xLTLf operator is going to both return and/or accept data in the result re
 				\State $i\gets \min_{\iota,\iota>i}\braket{t,\iota,L}$
 				\ElsIf{\textbf{exists} $\braket{t,j,L_j}\in \phi$ \textbf{s.t.}\; $j<i$}
 				\If{$\braket{t,\alpha,L_\alpha},\braket{t,\alpha+1,L_{\alpha+1}},\dots,\braket{t,i-1,L_{i-1}}\in\phi,$\\\textbf{\;and\;}$\Theta(i,j)$\textbf{\;for all\;}$T(j)\in L_\alpha\cup\dots\cup L_{i-1}$}
-\State $Map[\alpha]\gets Map[\alpha]\cup \Set{M(k,i)|T(k)\in L_\alpha\cup\dots\cup L_{i-1}}$
-\State $i\gets \min_{\iota,\iota>i}\braket{t,\iota,L}\in\phi'$
-\Else \;$\alpha\gets \alpha+1$
-\EndIf
+				\State $Map[\alpha]\gets Map[\alpha]\cup \Set{M(k,i)|T(k)\in L_\alpha\cup\dots\cup L_{i-1}}$
+				\State $i\gets \min_{\iota,\iota>i}\braket{t,\iota,L}\in\phi'$
+				\Else \;$\alpha\gets \alpha+1$
+				\EndIf
 				\Else \;$\alpha\gets i$
 				\EndIf
 				\EndWhile
@@ -152,3 +132,24 @@ Each \xLTLf operator is going to both return and/or accept data in the result re
 	}% <------------- end of \resizebox
 	\endgroup
 \end{algorithm}
+Operators in the first line filter traces' events and represent these into the previously-described result representation. 
+\textsf{Init} (\textsf{End}) returns the events at the beginning (end) of each trace satisfying the condition $A\wedge p$. Similarly to \cite{BurattinMS16}, each of these operators might be expressed as either an untimed or as a timed specification. Any operator will be considered timed by default when appearing inside a timed operator, like \textsf{Next}, \textsf{Globally}, \textsf{Future}, \textsf{Until}, and any other composed operator from the last line. E.g., In \figurename~\ref{fig:knobab_pipeline}, \textsf{Exists}$(1,\mathcal{P}_3)$ is a shorthand for \textsf{Exists}$(1,\textrm{FollowUp},-\infty<\textup{CA-15.3}<23.5)$, as each atom always associates an activity label to a payload condition. The operator associated to \textsf{Absence}$(1,\mathcal{P}_3)$ is untimed, while the \textsf{Exists}$(1,\mathcal{P}_3)$ descendant of \textsf{Globally} is timed.  While the timed definition returns a tuple $\braket{i,j,L}$ for each possible event $\sigma^i_j$ within the trace $\sigma^i$ where the formula holds, the untimed specification only checks whether the formula holds at the beginning of the trace. E.g., untimed \textsf{Exists} (\textsf{Absence}) returns the first event trace if at least $n$ (at most $n-1$) events satisfy $A\wedge p$, while the timed version returns the events satisfying (not satisfying) $A\wedge p$ (always $n=1$). All of these operators might be optionally marked as returning either an activation ($A$) or a target ($T$) condition, so that each  $\braket{i,j,L}$ triplet has $L=\{A(j)\}$ or $L=\{T(j)\}$; when no mark is specified, $L$ is empty. To wrap up the previous example, the timed  \textsf{Exists}$(1,\mathcal{P}_3)$ will list the events where $\mathcal{P}_3$ happened, $\Set{\braket{1,3,\{A(3)\}}}$, while the untimed version will just list the traces where such event happened and collect the event of interests in $L$, $\Set{\braket{1,1,\{3\}}}$.
+
+
+The next two lines report the same operators described in \S\ref{sec:DAD} with the addition of the explicit correlation conditions over activation and target conditions for each binary operator. Algorithm~\ref{algo:xltlfAlgo} provides  implementations of the timed versions of such operators, due to lack of space untimed versions are not provided, yet available in our codebase: please observe that $\textsf{Next}(\phi)$ keeps unaltered the activation and target conditions from $\phi$ and just returns the events where $\phi$ happens as a subsequent step. Any binary operator supports $\Theta$ conditions:  \textsf{And} (and \textsf{Or}) can be expressed as a (full-outer-)$\Theta$-join algorithm over the activation and target conditions stored in $L$ associated with the same event. If at least one activation condition matches one target condition from the same event, those are expressed as a marked correlation condition $M(i,j)$ which is then returned by the join. Regarding the same \textsf{Choice} clause from \figurename~\ref{fig:knobab_pipeline}, the correlation condition $\Theta$ associated to \textsf{Or} is then computed for each activation/target match, and if the condition is passed, the resulting match is added to $L$. 
+
+
+The remaining operators merge multiple operators together when 
+a specific implementation outperforms
+the execution of the operators separately:
+ e.g., $\textsf{AndFuture}(\phi,\phi',\Theta)$ is equivalent to\\ $\textsf{And}(\phi,\textsf{Future}(\phi'),\Theta)$, but preliminary experiments reveal that the former has a more efficient implementation than computing the latter. This choice was inspired by relational algebra, where $\theta$-joins are usually more efficient than performing a join and a selection operation separately.
+ On the other hand, % Similarly,  we can associate the correlation condition to implication operators after rewriting 
+ $\textsf{Implies}(\phi,\phi',\Theta)$ is rewritten as $\textsf{Or}(\textsf{Not}(\phi),\,\textsf
+{And}(\phi,\phi',\Theta),\,\textbf{true})$. As per previous discussion, the left leaf of \textsf{AndFuture}$_\Theta$ in \figurename~\ref{fig:knobab_pipeline} returns all of the referral events with CA 15-3 above the safeguard levels, $\Set{\braket{1,1,\{A(1)\}},\braket{3,1,\{A(1)\}}}$, while the right leaf returns just the follow-up events below such levels, $\Set{\braket{1,3,\{A(3)\}}}$. The operator \textsf{AndFuture}$_\Theta$ will then return only $\Set{\braket{3,1,\{M(1,3)\}}}$, as only the first trace will have a decrease below the safeguard levels from referral to follow-up.
+%
+Each \xLTLf operator is going to both return and/or accept data in the result representation, thus making such operators closed on such format.
+
+
+
+
+

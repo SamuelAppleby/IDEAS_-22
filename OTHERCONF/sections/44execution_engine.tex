@@ -9,5 +9,5 @@ The {Conjunctive Query} will return the traces satisfying all of the Declare cla
 \[\textup{Max-SAT}(\phi_1,\dots,\phi_n)=\left(\frac{|\Set{k|\exists j,L. \braket{i,j,L}\in\phi_k}|}{|\mathcal{M}|}\right)_{\sigma^i\in \mathcal{L}}\]
 \[\textsc{Confidence}(\phi_1,\dots,\phi_n)=\left(\frac{|\Set{i|\exists j,L. \braket{i,j,L}\in \phi_k}|}{|\textsf{ActLeaves}(\phi_k)|}\right)_{c_k\in \mathcal{M}}\]
 \[\textsc{Support}(\phi_1,\dots,\phi_n)=\left(\frac{|\Set{i|\exists j,L. \braket{i,j,L}\in \phi_k}|}{|\mathcal{L}|}\right)_{c_k\in \mathcal{M}}\]
-As the user in \figurename~\ref{fig:knobab_pipeline} wanted to return the ratio between satisfied clauses over the model size, the query plan exhibits a Max-SAT aggregation.
+As the user in \figurename~\ref{fig:knobab_pipeline} asks the ratio between satisfied clauses over the model size, the query plan exhibits a Max-SAT aggregation.
 

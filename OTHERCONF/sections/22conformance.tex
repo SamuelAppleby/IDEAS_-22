@@ -25,7 +25,7 @@ A more recent approach \cite{abs-2112-04623} defined specific data structures fo
 Some approaches utilise conformance checking as a mechanism to mine declarative {models}  from an event log: a scoring function tests % by testing 
 the validity of each possible clause over each possible trace. %via a scoring function. 
 SQLMiner \cite{SchonigRCJM16} {does so via} SQL queries \cite{Schonig15} {where e}ach specified declarative {template} % e.g. \emph{Response}, 
-{is} converted into a SQL query. E.g., given the SQL formulation for the \textsf{Response} template, the query returns a table \textsf{(Activation,Target,Score)} where each row $\braket{\textsf{a},\textsf{b},s}$ represents a candidate clause $\Sdeclare{Response}{a}{b}$, and $s$ is the  score associated to the candidate clause.
+{is} converted into a SQL query. E.g., given the SQL formulation for the \textsf{Response} template, the query returns a table \textsf{(Activation,Target,Score)} where each row $\braket{\textsf{a},\textsf{b},s}$ represents a candidate clause $\Sdeclare{Response}{a}{b}$, and $s$ is its score.
 %{Then, the outcome of such a query is a declare clause distinct by different activation and target combination.} 
 
 Each event log, as well as each activation and target activity label for generating the candidate Declare constraints to be tested, are stored in distinct relational tables. While the former are represented in  \textsf{Log(Id,Trace,ActivityId,Event)}, the latter are stored in \textsf{Actions(ActivationId,TargetId)}. The authors consider 
