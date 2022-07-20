@@ -4,7 +4,7 @@
 	\caption{KnoBAB vs SQLMiner Performance for 25 clauses with frequent activity labels with Support and Trace Information. OOM indicates Out of Secondary Memory for logs containing $10^3$ traces (followed by the time taken for an exception to occur).}\label{fig:vsSQL}
 \end{figure}
 \section{Experimental Analysis}\label{sec:exp}
-Our benchmarks exploited a Razer Blade Pro on Ubuntu 20.04: Intel Core i7-10875H CPU @ 2.30GHz - 5.10 GHz, 16GB DDR4 2933MHz RAM, 180GB free disk space. Our datasets (\tablename~\ref{table:dataset}) include 2 real life event logs\footnote{\url{https://dx.doi.org/10.17605/OSF.IO/XWD3V}}: BPIC 2011 (Dutch academic hospital log) and BPIC 2012 (Dutch loan company) from the Business Processing Intelligence Challenge.
+Our benchmarks exploited a Razer Blade Pro on Ubuntu 20.04: Intel Core i7-10875H CPU @ 2.30GHz - 5.10 GHz, 16GB DDR4 2933MHz RAM, 180GB free disk space. Our datasets (\tablename~\ref{table:dataset}) include 2 real life event logs\footnote{\url{https://dx.doi.org/10.17605/OSF.IO/XWD3V}}: \textsf{BPIC 2011} (Dutch academic hospital log) and \textsf{BPIC 2012 } (Dutch loan company) from the Business Processing Intelligence Challenge.
 
 \begin{table}
 	\resizebox{\linewidth}{!}{
@@ -14,12 +14,12 @@ Our benchmarks exploited a Razer Blade Pro on Ubuntu 20.04: Intel Core i7-10875H
 			\midrule
 			\multirow{4}{*}{SQL Miner} &
 			BPIC 2011 (original) & 1143 & 150 291 & 624 \\ &
-			BPIC 2011 (10) & 10 & 2613 & 26 \\ &
-			BPIC 2011 (100) & 100 & 12 195 & 26 \\ &
-			BPIC 2011 (1000) & 1000 & 133 935 & 28 \\ 
+			BPIC 2011 (10) & 10 & 2613 & 159 \\ &
+			BPIC 2011 (100) & 100 & 12 195 & 277 \\ &
+			BPIC 2011 (1000) & 1000 & 133 935 & 608 \\ 
 			\midrule
 			\multirow{1}{*}{Declare Analyzer} &
-			BPIC 2012 & 13087 & 262 200 & 21 \\
+			BPIC 2012 (original) & 13087 & 262 200 & 25 \\
 			\bottomrule
 		\end{tabular}
 	}
@@ -87,7 +87,7 @@ The set of experiments on Declare Analyzer have the aim of comparing our propose
 %=======
 %>>>>>>> 33357ef815c5a234b684fdafdceed45bf3a89be0
 %In order to do so, 
-We exploited the {BPIC 2012} dataset, defined in \tablename~\ref{table:dataset}, also used in \cite{BurattinMS16}, and we slightly edited the queries in the same paper as illustrated in \tablename~\ref{table:burattin_model}, where all the models $M_i$ and $M_j$ with $i<j$ are always the former a subset of the latter, while $M_{i+1}$ provides a 5-fold increase from $M_i$. For Declare Analyzer, we chose to load the dataset via MapDB\footnote{\url{https://mapdb.org/}}, thus aligning the authors' hash map representations of the dataset with a representation similar to the one for relational databases. 
+We exploited the {BPIC 2012} dataset, defined in \tablename~\ref{table:dataset}, also used in \cite{BurattinMS16}. \add{The data was modified so as to efficiently act across the trace payload information. \cite{BurattinMS16} requires the injecting of trace payload information into \textit{each} event. Our implementation, as stated in \ref{sec:XES}, injects the trace payload as a unique event at the beginning of the trace. } \remove{and we slightly edited the queries} The queries (from the same paper) \remove{in the same paper} were edited as illustrated in \tablename~\ref{table:burattin_model}, where all the models $M_i$ and $M_j$ with $i<j$ are always the former a subset of the latter, while $M_{i+1}$ provides a \remove{5-fold} \add{$\frac{5}{|M_i|}$-fold} increase from $M_i$. For Declare Analyzer, we chose to load the dataset via MapDB\footnote{\url{https://mapdb.org/}}, thus aligning the authors' hash map representations of the dataset with a representation similar to the one for relational databases. 
 
 
 Our experiments indicate that, overall, we are 2-3 times orders of magnitude more performant than DeclareAnalyzer. The conjunctive query denoted as \texttt{KnoBAB+CQ} demonstrates greater performance that \texttt{KnoBAB+Support}, as the calculations required for the support values per clause are more costly for smaller models. Though this is only within the order of the milliseconds. For an increase in model size, Declare Analyzer has a much greater time increase than KnoBAB (the best case for Declare Analyzer is over an order of magnitude greater than that of KnoBAB). %Regarding scalability, the former exhibits better performance than KnoBAB, where the complexity increase is less than that of KnoBAB. 
