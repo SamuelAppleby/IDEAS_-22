@@ -36,7 +36,7 @@ nor correlation ones with payload predicates. This problem is also shared with  
 
 {Despite the authors} exploit %providing additional 
 {data} perspectives in `Resource Assignment Constraints' clauses, distinct from the Declare ones, %these additions were only considered  {as 
-	only trace payload conditions are considered. Instead, KnoBAB supports payload information and predicate testing {both \emph{per trace}} and \emph{per event} \add{(see \S\ref{sec:XES})}, which could also be stored in a separate table as SQLMiner suggests, thus providing greater expressiveness per clause.
+	only trace payload conditions are considered. Instead, KnoBAB supports payload information and predicate testing {both \emph{per trace}} and \emph{per event} {(see \S\ref{sec:XES})}, which could also be stored in a separate table as SQLMiner suggests, thus providing greater expressiveness per clause.
 %
 SQLMiner queries can be chained together using \texttt{\textbf{SET UNION}}, though this provides no possibility for testing which are the clauses that are satisfied by the majority of the traces (Max-SAT). These query plans are not optimized as in \cite{BellatrecheKB21}, thus failing at both minimizing the data access
 and running multiple shared sub-queries only once.
