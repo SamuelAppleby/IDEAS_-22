@@ -82,6 +82,8 @@
 {\algorithmicelse\ \algorithmicif\ \CONDITION{#1}{\ \algorithmicthen}}
 %% End Multiline
 \usepackage{algorithm,algorithmicx}
+\algnewcommand{\IIf}[1]{\State\algorithmicif\ #1\ \algorithmicthen}
+\algnewcommand{\EndIIf}{\unskip\ \algorithmicend\ \algorithmicif}
 %\makeatletter
 %\algrenewcommand\ALG@beginalgorithmic{\ttfamily}
 %\makeatother

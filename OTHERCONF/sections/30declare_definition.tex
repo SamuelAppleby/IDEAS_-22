@@ -40,9 +40,9 @@ This solution is even less efficient than exploiting sorted linear data structur
 				%\State {\textbf{Require:\;}sorted($\phi$)}
 				\ForAll{$\braket{t,e,L}\in\phi$}
 				\State $E\gets\Set{e'|\braket{t,e',L'}\in\phi\texttt{\textbf{\;and\;}}e'\geq e}$
-				\If {$|E|=\ell_t-e$} 
+				\IIf {$|E|=\ell_t-e$} 
 				\textbf{yield} $\braket{t,e,\bigcup\Set{L'|\braket{t,e',L'}\in\phi\texttt{\textbf{\;and\;}}e'\in E}}$
-				\EndIf
+				\EndIIf
 				\EndFor
 				\EndFunction\medskip
 				%%
@@ -75,10 +75,10 @@ This solution is even less efficient than exploiting sorted linear data structur
 				\State \textbf{if}\;$L''\neq\emptyset$\;\textbf{then\;yield} $\braket{t,e,L''}$; 
 				\State $\texttt{next}(it)$; $\texttt{next}(it')$; 
 				\ElsIf{$t<t'$\textbf{\;or\;}($t=t'$\textbf{\;and\;}$e<e'$)} 
-				\If  {$isDisjunctive$} \textbf{yield} $\braket{t,e,L}$  \EndIf
+				\IIf  {$isDisjunctive$} \textbf{yield} $\braket{t,e,L}$  \EndIIf
 				\State $\texttt{next}(it)$
 				\Else 
-				\If  {$isDisjunctive$} \textbf{yield} $\braket{t',e',L'}$  \EndIf
+				\IIf  {$isDisjunctive$} \textbf{yield} $\braket{t',e',L'}$  \EndIIf
 				\State $\texttt{next}(it')$
 				\EndIf
 				\EndWhile
