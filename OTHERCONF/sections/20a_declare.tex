@@ -15,7 +15,7 @@
 	 & \textsf{Response($A,p,B,q$) } & The activation is either followed by or simultaneous to  the target. & $\Globally((A\wedge p)\Rightarrow\Future(B\wedge q))$ \\
 	 & \textsf{ChainResponse($A,p,B,q$) }  & The activation is immediately followed by the target. & $\Globally((A\wedge p)\Rightarrow \Next(B\wedge q))$\\
 	 & \textsf{RespExistence($A,p,B,q$) }  & The activation requires the existence of the target.& $\Future(A\wedge p)\Rightarrow\Future(B\wedge q)$ \\
-	 & \textsf{ExlChoice($A,p,B,q$) } & Either the activation \texttt{xor} the target happen. & $(\Future(A\wedge p)\vee \Future(B\wedge q))\wedge \llbracket\DeclareClause{NotCoExistence}{A}{p}{B}{q}\rrbracket$\\ 
+	 & \textsf{ExlChoice($A,p,A',p'$) } & Only one activation condition must happen. & $\llbracket\DeclareClause{Choice}{A}{p}{A'}{p'}\rrbracket\wedge \llbracket\DeclareClause{NotCoExistence}{A}{p}{A'}{p'}\rrbracket$\\ 
 	 & \textsf{CoExistence($A,p,B,q$) }  & \textsf{RespExistence}, and vice versa. & $ \llbracket\DeclareClause{RespExistence}{A}{p}{B}{q}\rrbracket\wedge \llbracket\DeclareClause{RespExistence}{B}{q}{A}{p}\rrbracket$\\
 	 & \textsf{Succession($A,p,B,q$) }  & The target should only follow the activation. & $\llbracket\DeclareClause{Precedence}{A}{p}{B}{q}\rrbracket\wedge \llbracket\DeclareClause{Response}{A}{p}{B}{q}\rrbracket$\\
 
